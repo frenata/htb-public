@@ -1,0 +1,8 @@
+# Nmap 7.80 scan initiated Sun May 24 19:45:36 2020 as: nmap -sUV -F -v -oA logs/nmap-udp 10.10.10.174
+Nmap scan report for 10.10.10.174
+Host is up (0.0085s latency).
+All 100 scanned ports on 10.10.10.174 are closed
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun May 24 19:47:19 2020 -- 1 IP address (1 host up) scanned in 102.91 seconds

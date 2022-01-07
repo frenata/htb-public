@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/fatty-client/fatty-client/fatty-client (1).iml" filepath="$PROJECT_DIR$/META-INF/maven/fatty-client/fatty-client/fatty-client (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/fatty-client/fatty-client/fatty-client (2) (fatty-client).iml" filepath="$PROJECT_DIR$/META-INF/maven/fatty-client/fatty-client/fatty-client (2) (fatty-client).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/log4j/log4j/log4j (1).iml" filepath="$PROJECT_DIR$/META-INF/maven/log4j/log4j/log4j (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/log4j/log4j/log4j (2) (log4j).iml" filepath="$PROJECT_DIR$/META-INF/maven/log4j/log4j/log4j (2) (log4j).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-api/slf4j-api (1).iml" filepath="$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-api/slf4j-api (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-api/slf4j-api (2) (org.slf4j).iml" filepath="$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-api/slf4j-api (2) (org.slf4j).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-log4j12/slf4j-log4j12 (1).iml" filepath="$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-log4j12/slf4j-log4j12 (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-log4j12/slf4j-log4j12 (2) (org.slf4j).iml" filepath="$PROJECT_DIR$/META-INF/maven/org.slf4j/slf4j-log4j12/slf4j-log4j12 (2) (org.slf4j).iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/src.iml" filepath="$PROJECT_DIR$/.idea/src.iml" />
+    </modules>
+  </component>
+</project>

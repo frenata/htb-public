@@ -1,0 +1,4 @@
+src/server/out
+src/client/out
+src/client/payload
+ysoserial.jar

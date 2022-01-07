@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="slf4j-log4j12 (1)" />
+        <module name="log4j (2) (log4j)" />
+        <module name="slf4j-api (2) (org.slf4j)" />
+        <module name="log4j (1)" />
+        <module name="slf4j-log4j12 (2) (org.slf4j)" />
+        <module name="slf4j-api (1)" />
+        <module name="fatty-client (1)" />
+        <module name="fatty-client (2) (fatty-client)" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="fatty-client (1)" target="1.5" />
+      <module name="fatty-client (2) (fatty-client)" target="1.8" />
+      <module name="log4j (1)" target="1.5" />
+      <module name="log4j (2) (log4j)" target="1.4" />
+      <module name="slf4j-api (1)" target="1.5" />
+      <module name="slf4j-api (2) (org.slf4j)" target="1.6" />
+      <module name="slf4j-log4j12 (1)" target="1.5" />
+      <module name="slf4j-log4j12 (2) (org.slf4j)" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
