@@ -1,0 +1,10 @@
+database management system users password hashes:
+[*] pheobe [1]:
+    password hash: NULL
+[*] phoebe [1]:
+    password hash: *8011380027B5ACED186B2FF99181FE050E5CA7A8
+[*] pma [1]:
+    password hash: NULL
+[*] root [1]:
+    password hash: NULL
+

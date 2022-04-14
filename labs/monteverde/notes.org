@@ -1,0 +1,60 @@
+* Monteverde
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Sat May  9 23:39:32 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.172
+Nmap scan report for 10.10.10.172
+Host is up (0.012s latency).
+Not shown: 989 filtered ports
+Service Info: Host: MONTEVERDE; OS: Windows; CPE: cpe:/o:microsoft:windows
+*** 53/tcp   open  domain?
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+*** 88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-05-09 21:52:21Z)
+*** 135/tcp  open  msrpc         Microsoft Windows RPC
+*** 139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+*** 389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)
+*** 445/tcp  open  microsoft-ds?
+*** 464/tcp  open  kpasswd5?
+*** 593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+*** 636/tcp  open  tcpwrapped
+*** 3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)
+*** 3269/tcp open  tcpwrapped
+** Foothold
+
+can enumerates users with rpcclient
+smbclient -L doesn't turn anything up   
+GetNPUsers shows none of them have no pre auth set for kerberos
+But finally trying $user:$user gets access to some samba shares for ~SABatchJobs~, and one suspicious file under ~mhope~'s user share, ~azure.xml~
+
+~azure.xml~ has a stored password, so now we try to escalate to ~mhope~
+~smb~ doesn't show anything obviously new, so ~evil-winrm~ is worth a try
+shell and USER: 4961976bd7d8f4eeb2ce3705e2f212f2
+
+** Escalation
+
+Poking around by hand reveals and interesting directory: ~mhope/.Azure~, with powershell commandlet that seems to download azure passwords -- should be worth trying
+
+~winPEAS~:
+It also looks like mhope has access to E:
+
+https://www.lares.com/blog/hunting-azure-admins-for-vertical-escalation/
+
+Since that Token is stored directly and the user is setup to use it, ~Get-AzContext -ListAvailable~ already works -- but what info to draw out of this to escalate?
+
+https://github.com/fox-it/adconnectdump
+https://blog.xpnsec.com/azuread-connect-for-redteam/
+
+Finally, working out the connection string and executing the POC works:
+#+BEGIN_SRC powershell
+*Evil-WinRM* PS C:\Users\mhope\Downloads> ./ADGather.ps1
+AD Connect Sync Credential Extract POC (@_xpn_)
+
+Domain: MEGABANK.LOCAL
+Username: administrator
+Password: d0m@in4dminyeah!
+#+END_SRC
+
+~evil-winrm~ works with those creds!
+ROOT: 12909612d25c8dcf6e5a07d1a804a0bc

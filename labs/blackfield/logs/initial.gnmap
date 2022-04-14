@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Sat Jun  6 18:15:49 2020 as: nmap -Pn -sC -sV -oA logs/initial 10.10.10.192
+Host: 10.10.10.192 ()	Status: Up
+Host: 10.10.10.192 ()	Ports: 53/open/tcp//domain?///, 88/open/tcp//kerberos-sec//Microsoft Windows Kerberos (server time: 2020-06-07 05:20:02Z)/, 135/open/tcp//msrpc//Microsoft Windows RPC/, 389/open/tcp//ldap//Microsoft Windows Active Directory LDAP (Domain: BLACKFIELD.local0., Site: Default-First-Site-Name)/, 445/open/tcp//microsoft-ds?///, 593/open/tcp//ncacn_http//Microsoft Windows RPC over HTTP 1.0/, 3268/open/tcp//ldap//Microsoft Windows Active Directory LDAP (Domain: BLACKFIELD.local0., Site: Default-First-Site-Name)/	Ignored State: filtered (993)
+# Nmap done at Sat Jun  6 18:19:09 2020 -- 1 IP address (1 host up) scanned in 200.18 seconds

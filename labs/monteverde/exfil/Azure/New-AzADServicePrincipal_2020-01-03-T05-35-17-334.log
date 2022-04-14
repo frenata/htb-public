@@ -1,0 +1,6 @@
+Module : Az.Resources
+Cmdlet : New-AzADServicePrincipal
+Parameters
+ -DisplayName : ServicePrincipalName
+ -PasswordCredential : Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential[]
+

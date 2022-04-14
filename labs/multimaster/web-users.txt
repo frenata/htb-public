@@ -1,0 +1,17 @@
+Sarina Bauer|Junior Developer|sbauer@megacorp.htb
+Octavia Kent|Senior Consultant|okent@megacorp.htb
+Christian Kane|Assistant Manager|ckane@megacorp.htb
+Kimberly Page|Financial Analyst|kpage@megacorp.htb
+Shayna Stafford|HR Manager|shayna@megacorp.htb
+James Houston|QA Lead|james@megacorp.htb
+Connor York|Web Developer|cyork@megacorp.htb
+Reya Martin|Tech Support|rmartin@megacorp.htb
+Zac Curtis|Junior Analyst|zac@magacorp.htb
+Jorden Mclean|Full-Stack Developer|jorden@megacorp.htb
+Alyx Walters|Automation Engineer|alyx@megacorp.htb
+Ian Lee|Internal Auditor|ilee@megacorp.htb
+Nikola Bourne|Head of Accounts|nbourne@megacorp.htb
+Zachery Powers|Credit Analyst|zpowers@megacorp.htb
+Alessandro Dominguez|Senior Web Developer|aldom@megacorp.htb
+MinatoTW|CEO|minato@megacorp.htb
+egre55|CEO|egre55@megacorp.htb

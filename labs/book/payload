@@ -1,0 +1,1 @@
+cp /root/.ssh/id_rsa /home/reader/.frenata && chown reader:reader /home/reader/.frenata/id_rsa

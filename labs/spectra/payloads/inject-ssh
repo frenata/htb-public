@@ -1,0 +1,2 @@
+cd /home/nginx/.ssh/
+upload payloads/authorized_keys

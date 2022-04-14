@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.80 scan initiated Wed Jun 10 20:35:57 2020 as: nmap -sU -F -v -oA logs/nmap-udp 10.10.10.179 -->
+<nmaprun scanner="nmap" args="nmap -sU -F -v -oA logs/nmap-udp 10.10.10.179" start="1591835757" startstr="Wed Jun 10 20:35:57 2020" version="7.80" xmloutputversion="1.04">
+<scaninfo type="udp" protocol="udp" numservices="100" services="7,9,17,19,49,53,67-69,80,88,111,120,123,135-139,158,161-162,177,427,443,445,497,500,514-515,518,520,593,623,626,631,996-999,1022-1023,1025-1030,1433-1434,1645-1646,1701,1718-1719,1812-1813,1900,2000,2048-2049,2222-2223,3283,3456,3703,4444,4500,5000,5060,5353,5632,9200,10000,17185,20031,30718,31337,32768-32769,32771,32815,33281,49152-49154,49156,49181-49182,49185-49186,49188,49190-49194,49200-49201,65024"/>
+<verbose level="1"/>
+<debugging level="0"/>
+<taskbegin task="Ping Scan" time="1591835757"/>
+<taskend task="Ping Scan" time="1591835757" extrainfo="1 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1591835757"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1591835757"/>
+<taskbegin task="UDP Scan" time="1591835757"/>
+<taskend task="UDP Scan" time="1591835759" extrainfo="100 total ports"/>
+<host starttime="1591835757" endtime="1591835759"><status state="up" reason="echo-reply" reason_ttl="127"/>
+<address addr="10.10.10.179" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="open|filtered" count="98">
+<extrareasons reason="no-responses" count="98"/>
+</extraports>
+<port protocol="udp" portid="53"><state state="open" reason="udp-response" reason_ttl="127"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="udp" portid="123"><state state="open" reason="udp-response" reason_ttl="127"/><service name="ntp" method="table" conf="3"/></port>
+</ports>
+<times srtt="7456" rttvar="5976" to="100000"/>
+</host>
+<runstats><finished time="1591835759" timestr="Wed Jun 10 20:35:59 2020" elapsed="2.60" summary="Nmap done at Wed Jun 10 20:35:59 2020; 1 IP address (1 host up) scanned in 2.60 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

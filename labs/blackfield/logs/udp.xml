@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.80 scan initiated Sat Jun  6 18:16:40 2020 as: nmap -sU -p- -v -oA logs/udp 10.10.10.192 -->
+<nmaprun scanner="nmap" args="nmap -sU -p- -v -oA logs/udp 10.10.10.192" start="1591481800" startstr="Sat Jun  6 18:16:40 2020" version="7.80" xmloutputversion="1.04">
+<scaninfo type="udp" protocol="udp" numservices="65535" services="1-65535"/>
+<verbose level="1"/>
+<debugging level="0"/>
+<taskbegin task="Ping Scan" time="1591481800"/>
+<taskend task="Ping Scan" time="1591481800" extrainfo="1 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1591481800"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1591481800"/>
+<taskbegin task="UDP Scan" time="1591481800"/>
+<taskprogress task="UDP Scan" time="1591481831" percent="1.12" remaining="2734" etc="1591484564"/>
+<taskprogress task="UDP Scan" time="1591481876" percent="2.85" remaining="2595" etc="1591484471"/>
+<taskprogress task="UDP Scan" time="1591481948" percent="5.06" remaining="2778" etc="1591484726"/>
+<taskprogress task="UDP Scan" time="1591482031" percent="7.11" remaining="3018" etc="1591485049"/>
+<taskprogress task="UDP Scan" time="1591482079" percent="8.91" remaining="2852" etc="1591484931"/>
+<taskprogress task="UDP Scan" time="1591482319" percent="16.18" remaining="2689" etc="1591485008"/>
+<taskprogress task="UDP Scan" time="1591483114" percent="17.98" remaining="5993" etc="1591489106"/>
+<taskprogress task="UDP Scan" time="1591483162" percent="19.56" remaining="5603" etc="1591488764"/>
+<taskprogress task="UDP Scan" time="1591483524" percent="20.30" remaining="6767" etc="1591490291"/>
+<taskprogress task="UDP Scan" time="1591483563" percent="21.76" remaining="6339" etc="1591489901"/>
+<taskprogress task="UDP Scan" time="1591626863" percent="22.76" remaining="492266" etc="1592119128"/>

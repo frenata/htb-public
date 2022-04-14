@@ -1,0 +1,21 @@
+❯ dirsearch.py -u $TARGET -E -r -x 403 | tee logs/dirsearch
+
+ _|. _ _  _  _  _ _|_    v0.3.9
+ (_||| _) (/_(_|| (_| )
+
+ Extensions: php, asp, aspx, jsp, js, html, do, action | HTTP method: get | Threads: 10 | Wordlist size: 8688 | Recursion level: 1
+
+ Error Log: /home/user/src/dirsearch/logs/errors-20-05-12_10-54-53.log
+
+ Target: 10.10.10.185
+
+ [10:54:53] Starting:
+ [10:55:08] 301 -  313B  - /assets  ->  http://10.10.10.185/assets/
+ [10:55:16] 301 -  313B  - /images  ->  http://10.10.10.185/images/
+ [10:55:16] 200 -    4KB - /index.php
+ [10:55:16] 200 -    4KB - /index.php/login/
+ [10:55:18] 200 -    4KB - /login.php
+ [10:55:29] 302 -    3KB - /upload.php  ->  login.php
+
+ Task Completed
+

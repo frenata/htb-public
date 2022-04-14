@@ -1,0 +1,43 @@
+[16:52:31] [Server thread/INFO]: [MyExploit] Enabling MyExploit v2.0.9
+[16:52:31] [Server thread/INFO]: [MyPlugin] -- enabled, electric boogaloo
+[16:53:08] [Thread-1/INFO]: Stopping server
+[16:53:08] [SIGCONT handler/WARN]: Exception in thread "SIGCONT handler" com.sun.jna.LastErrorException: [5] Input/output error
+[16:53:08] [SIGCONT handler/WARN]: at com.sun.jna.Native.invokeVoid(Native Method)
+[16:53:08] [SIGCONT handler/WARN]: at com.sun.jna.Function.invoke(Function.java:408)
+[16:53:08] [SIGCONT handler/WARN]: at com.sun.jna.Function.invoke(Function.java:354)
+[16:53:08] [SIGCONT handler/WARN]: at com.sun.jna.Library$Handler.invoke(Library.java:244)
+[16:53:08] [SIGCONT handler/WARN]: at com.sun.proxy.$Proxy18.tcgetattr(Unknown Source)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.terminal.impl.jna.linux.LinuxNativePty.getAttr(LinuxNativePty.java:76)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.terminal.impl.AbstractPosixTerminal.getAttributes(AbstractPosixTerminal.java:44)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.terminal.impl.AbstractTerminal.enterRawMode(AbstractTerminal.java:117)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.reader.impl.LineReaderImpl.handleSignal(LineReaderImpl.java:956)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.terminal.impl.AbstractTerminal.raise(AbstractTerminal.java:81)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.terminal.impl.PosixSysTerminal.lambda$handle$1(PosixSysTerminal.java:65)
+[16:53:08] [SIGCONT handler/WARN]: at org.jline.utils.Signals.lambda$register$1(Signals.java:51)
+[16:53:08] [SIGCONT handler/WARN]: at com.sun.proxy.$Proxy21.handle(Unknown Source)
+[16:53:08] [SIGCONT handler/WARN]: at jdk.unsupported/sun.misc.Signal$InternalMiscHandler.handle(Signal.java:198)
+[16:53:08] [SIGCONT handler/WARN]: at java.base/jdk.internal.misc.Signal$1.run(Signal.java:220)
+[16:53:08] [SIGCONT handler/WARN]: at java.base/java.lang.Thread.run(Thread.java:834) 
+
+
+
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.http.HttpClient.New(HttpClient.java:341)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.http.HttpClient.New(HttpClient.java:362)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1248)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1187)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1081)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1015)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1515)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+[23:18:52] [Paper Watchdog Thread/ERROR]: net.frenata.tac.dyplesher.Exploit$1.run(Exploit.java:42)
+[23:18:52] [Paper Watchdog Thread/ERROR]: app//org.bukkit.craftbukkit.v1_12_R1.scheduler.CraftTask.run(CraftTask.java:64)
+[23:18:52] [Paper Watchdog Thread/ERROR]: app//org.bukkit.craftbukkit.v1_12_R1.scheduler.CraftScheduler.mainThreadHeartbeat(CraftScheduler.java:423)
+[23:18:52] [Paper Watchdog Thread/ERROR]: app//net.minecraft.server.v1_12_R1.MinecraftServer.D(MinecraftServer.java:840)
+[23:18:52] [Paper Watchdog Thread/ERROR]: app//net.minecraft.server.v1_12_R1.DedicatedServer.D(DedicatedServer.java:423)
+[23:18:52] [Paper Watchdog Thread/ERROR]: app//net.minecraft.server.v1_12_R1.MinecraftServer.C(MinecraftServer.java:774)
+[23:18:52] [Paper Watchdog Thread/ERROR]: app//net.minecraft.server.v1_12_R1.MinecraftServer.run(MinecraftServer.java:666)
+[23:18:52] [Paper Watchdog Thread/ERROR]: java.base@11.0.7/java.lang.Thread.run(Thread.java:834)
+[23:18:52] [Paper Watchdog Thread/ERROR]: ------------------------------
+[23:18:52] [Paper Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---
+[23:18:52] [Paper Watchdog Thread/ERROR]: ------------------------------ 

@@ -1,0 +1,54 @@
+* Nest
+** enumeration
+~nmap~ doesn't seem to discover 4386, but ~masscan~ does
+*** Discovered open port 445/tcp on 10.10.10.178                                   
+Have access to the Users and Data shares.
+Data has a welcome email template from HR which reveals the TempUsers's password.
+*** Discovered open port 4386/tcp on 10.10.10.178                                  
+~nc~ doesn't seem to send the right endings, but ~telnet~ does
+This app seems intended to run queries, but allows the user to ~cd ..~ and basically move all over the box.
+
+There's an interesting file at ~C:\windows\debug\PASSWD.log~ to look at eventually
+** foothold
+  
+Given the Welcome Email from HR, we can use the TempUser to gain access to the ~Secure$~ share, but not ~C$~.
+
+More importantly, it gains access to new folder in ~Data~, which leaks both some interesting history of commands in Notepad++ but also a hash for ~c.smith~
+
+Using CyberChef to replicate the VB encryption scheme, I yank out the c.smith password:
+xRxRxPANCAK3SxRxRx
+
+https://gchq.github.io/CyberChef/#recipe=From_Base64('A-Za-z0-9%2B/%3D',false)Derive_PBKDF2_key(%7B'option':'UTF8','string':'N3st22'%7D,256,2,'SHA1',%7B'option':'UTF8','string':'88552299'%7D/disabled)AES_Decrypt(%7B'option':'Hex','string':'76cdb9283585e05cf53d14658552f6a18285e49c63e9265078d4f0e8a477e8aa'%7D,%7B'option':'UTF8','string':'464R5DFA5DL6LE28'%7D,'CBC','Raw','Raw',%7B'option':'Hex','string':''%7D)&input=ZlRFekFmWURvejFZemtxaFFrSDZHUUZZS3AxWFk1aG03YmpPUDg2eVl4RT0
+
+USER: out of C.Smith's home, along with a binary
+
+** escalation
+
+Extracting out the debug password from the 'alternate stream':
+smb: \C.Smith\HQK Reporting\> allinfo "Debug Mode Password.txt"
+altname: DEBUGM~1.TXT
+create_time:    Fri Aug  9 00:06:12 2019 BST
+access_time:    Fri Aug  9 00:06:12 2019 BST
+write_time:     Fri Aug  9 00:08:17 2019 BST
+change_time:    Fri Aug  9 00:08:17 2019 BST
+attributes: A (20)
+stream: [::$DATA], 0 bytes
+stream: [:Password:$DATA], 15 bytes
+smb: \C.Smith\HQK Reporting\> get "Debug Mode Password.txt:Password:$DATA"
+getting file \C.Smith\HQK Reporting\Debug Mode Password.txt:Password:$DATA of size 15 as Debug Mode Password.txt:Password:$DATA (0.4 KiloBytes/sec) (average 0.4 KiloBytes/sec)
+
+Hidden is: WBQ201953D8w
+
+cf: 
+ * https://superuser.com/questions/1520250/read-alternate-data-streams-over-smb-with-linux
+ * https://www.howtogeek.com/howto/windows-vista/stupid-geek-tricks-hide-data-in-a-secret-text-file-compartment/
+
+With the reporting service unlocked, 'SHOWQUERY' essentially becomes 'cat'
+
+Close at hand there's an Ldap.conf, with the Admin creds in it
+
+The HqkLdap.exe binary needs to be decompiled (I used ILSpy on linux) to extract the changed passphrase/salt/kdf-iterations/IV for the decryption routine.
+
+Then SMB with the admin creds and
+
+ROOT: 6594c2eb084bc0f08a42f0b94b878c41%

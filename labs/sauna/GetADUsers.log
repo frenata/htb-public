@@ -1,0 +1,13 @@
+❯ GetADUsers.py -dc-ip $TARGET egotistical-bank.local/FSmith -all
+Impacket v0.9.22.dev1+20200424.150528.c44901d1 - Copyright 2020 SecureAuth Corporation
+
+Password:
+[*] Querying 10.10.10.175 for information about domain.
+Name                  Email                           PasswordLastSet      LastLogon      
+--------------------  ------------------------------  -------------------  -------------------
+Administrator                                         2020-01-24 17:14:15.321116  2020-02-10 16:16:17.478519
+Guest                                                 <never>              <never>        
+krbtgt                                                2020-01-23 05:45:30.587720  <never> 
+HSmith                                                2020-01-23 05:54:34.140321  <never> 
+FSmith                                                2020-01-23 16:45:19.047096  2020-05-05 08:04:44.123781
+svc_loanmgr                                           2020-01-24 23:48:31.678079  <never> 

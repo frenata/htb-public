@@ -1,0 +1,74 @@
+* Blunder
+** Enumeration
+*** ftp (closed)
+*** http
+A CMS called *bludit*
+A little reading reveals that there looks to be a forced default of a username ~admin~ and a vulnerable image-upload CVE:
+ https://packetstormsecurity.com/files/155295/Bludit-Directory-Traversal-Image-File-Upload.html
+
+Probably this is only exploitable after logging in.
+
+
+**** gobuster
+ * gitignore is interesting, as it shows what some of the files are the server are!
+~bl-content~ is directly accessible.
+
+This timestamps on most of the files predate the CVE, so this is probably definitely vulnerable.
+
+**** Resources
+ * https://docs.bludit.com/en/security/password-recovery
+ * https://packetstormsecurity.com/files/155295/Bludit-Directory-Traversal-Image-File-Upload.html
+ * https://github.com/bludit/bludit/issues/1081
+ * https://github.com/bludit/bludit/issues/1026
+ * https://rastating.github.io/bludit-brute-force-mitigation-bypass/
+  
+**** Scans
+
+gobuster looking for anything else interesting
+brute-force the password
+
+Finally found the username with ~ffuf~:
+~ffuf -u http://blunder.htb/FUZZ.txt -w /usr/share/wordlists/dirb/common.txt~
+And used ~cewl~ / oddity-checking, the password is ~RolandDeschain~
+
+** Foothold
+
+After finding the admin creds, the msf exploit works perfectly.
+
+** Escalation
+
+*** www-data > hugo
+
+There are some interesting files in ~/ftp~, including a note from Shaun to Sophie that suggests sensitive data is hidden somewhere. ~config~ is a tarred and gziped wav file and Shaun turns out to have some hacking related screenshots on his desktop, but this otherwise seems to be a deadend.
+
+Fortunately, digging into the ~bludit~ files reveals password hashes stored in ~databases/users.php~. hashes.org cracks the unsalted password for ~hugo~ on the apparently inactive higher version of bludit.
+
+
+*** hugo > root
+    
+~sudo -l~:
+
+User hugo may run the following commands on blunder:
+    (ALL, !root) /bin/bash
+
+So hugo can't impersonate root, but can impersonate shaun!
+
+~sudo -u shaun bash~
+
+and we have elevated to shaun
+
+At this point the shell proved very unstable, probably due to all the brute-forcing.
+
+Ideas to elevate again to root:
+ * ~lxd~ (in group, but doesn't seem to be installed)
+ * ~pkexec~ (in adm group)
+ * ~/home/shaun/.cache/tracker/meta.db~ is a sqlite db with potentially some interesting things
+ * ~/usr/share/ppd/custom~
+
+Tried all those things... decided I must be overthinking it, and that there must some kind of exploit with ~ALL, !root~.
+
+Sure enough, ~man sudoers~ warns about this:
+https://www.sudo.ws/man/1.8.13/sudoers.man.html#SECURITY_NOTES
+https://blog.aquasec.com/cve-2019-14287-sudo-linux-vulnerability
+
+~sudo -u#-1 bash~

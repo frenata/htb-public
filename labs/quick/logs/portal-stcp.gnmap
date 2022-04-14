@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Sun May 17 18:39:36 2020 as: nmap -p- -PY -oA logs/portal-stcp portal.quick.htb
+Host: 10.10.10.186 (quick.htb)	Status: Up
+Host: 10.10.10.186 (quick.htb)	Ports: 22/open/tcp//ssh///, 9001/open/tcp//tor-orport///	Ignored State: closed (65533)
+# Nmap done at Sun May 17 18:40:08 2020 -- 1 IP address (1 host up) scanned in 31.89 seconds

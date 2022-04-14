@@ -1,0 +1,216 @@
+Enter WORKGROUP\support's password: 
+	User Name   :	Administrator
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	Built-in account for administering the computer/domain
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Mon, 08 Jun 2020 10:02:03 EDT
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 31 Dec 1969 19:00:00 EST
+	Password last set Time   :	Sun, 23 Feb 2020 13:09:53 EST
+	Password can change Time :	Mon, 24 Feb 2020 13:09:53 EST
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x1f4
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000044
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	Guest
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	Built-in account for guest access to the computer/domain
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Mon, 08 Jun 2020 11:25:28 EDT
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 13 Sep 30828 22:48:05 EDT
+	Password last set Time   :	Wed, 03 Jun 2020 12:18:29 EDT
+	Password can change Time :	Wed, 31 Dec 1969 19:00:00 EST
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x1f5
+	group_rid:	0x202
+	acb_info :	0x00000214
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	krbtgt
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	Key Distribution Center Service Account
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Wed, 31 Dec 1969 19:00:00 EST
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 31 Dec 1969 19:00:00 EST
+	Password last set Time   :	Sun, 23 Feb 2020 13:08:32 EST
+	Password can change Time :	Mon, 24 Feb 2020 13:08:32 EST
+	Password must change Time:	Sun, 05 Apr 2020 14:08:32 EDT
+	unknown_2[0..31]...
+	user_rid :	0x1f6
+	group_rid:	0x201
+	acb_info :	0x00020011
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	audit2020
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Mon, 08 Jun 2020 15:52:49 EDT
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 31 Dec 1969 19:00:00 EST
+	Password last set Time   :	Mon, 08 Jun 2020 15:44:09 EDT
+	Password can change Time :	Tue, 09 Jun 2020 15:44:09 EDT
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x44f
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	support
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Mon, 08 Jun 2020 21:40:00 EDT
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 31 Dec 1969 19:00:00 EST
+	Password last set Time   :	Sun, 23 Feb 2020 12:53:24 EST
+	Password can change Time :	Mon, 24 Feb 2020 12:53:24 EST
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x450
+	group_rid:	0x201
+	acb_info :	0x00010210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x0000007c
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	svc_backup
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Mon, 08 Jun 2020 16:56:17 EDT
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 31 Dec 1969 19:00:00 EST
+	Password last set Time   :	Sun, 23 Feb 2020 12:54:49 EST
+	Password can change Time :	Mon, 24 Feb 2020 12:54:49 EST
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x585
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000004
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	lydericlefebvre
+	Full Name   :	Lydéric aas. Lefebvre
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	@lydericlefebvre - VM Creator
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Wed, 31 Dec 1969 19:00:00 EST
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 13 Sep 30828 22:48:05 EDT
+	Password last set Time   :	Fri, 28 Feb 2020 17:33:36 EST
+	Password can change Time :	Sat, 29 Feb 2020 17:33:36 EST
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x586
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+Enter WORKGROUP\support's password: 
+	User Name   :	lydericlefebvre
+	Full Name   :	Lydéric aas. Lefebvre
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	@lydericlefebvre - VM Creator
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Wed, 31 Dec 1969 19:00:00 EST
+	Logoff Time              :	Wed, 31 Dec 1969 19:00:00 EST
+	Kickoff Time             :	Wed, 13 Sep 30828 22:48:05 EDT
+	Password last set Time   :	Fri, 28 Feb 2020 17:33:36 EST
+	Password can change Time :	Sat, 29 Feb 2020 17:33:36 EST
+	Password must change Time:	Wed, 13 Sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x586
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...

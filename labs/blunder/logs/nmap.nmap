@@ -1,0 +1,13 @@
+# Nmap 7.80 scan initiated Sun May 31 00:00:33 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.191
+Nmap scan report for 10.10.10.191
+Host is up (0.041s latency).
+Not shown: 998 filtered ports
+PORT   STATE  SERVICE VERSION
+21/tcp closed ftp
+80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-generator: Blunder
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Blunder | A blunder of interesting facts
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun May 31 00:00:56 2020 -- 1 IP address (1 host up) scanned in 23.58 seconds

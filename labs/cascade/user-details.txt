@@ -1,0 +1,390 @@
+	User Name   :	CascGuest
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	Built-in account for guest access to the computer/domain
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Thu, 01 Jan 1970 01:00:00 BST
+	Password can change Time :	Thu, 01 Jan 1970 01:00:00 BST
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x1f5
+	group_rid:	0x202
+	acb_info :	0x00000215
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	arksvc
+	Full Name   :	ArkSvc
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Wed, 29 Jan 2020 21:05:41 GMT
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Thu, 09 Jan 2020 16:18:20 GMT
+	Password can change Time :	Thu, 09 Jan 2020 16:18:20 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x452
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x0000000d
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	s.smith
+	Full Name   :	Steve Smith
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapAuditDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Tue, 28 Jan 2020 23:26:39 GMT
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Tue, 28 Jan 2020 19:58:05 GMT
+	Password can change Time :	Tue, 28 Jan 2020 19:58:05 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x453
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000010
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	r.thompson
+	Full Name   :	Ryan Thompson
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Wed, 29 Jan 2020 01:11:53 GMT
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Thu, 09 Jan 2020 19:31:26 GMT
+	Password can change Time :	Thu, 09 Jan 2020 19:31:26 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x455
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000002
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	util
+	Full Name   :	Util
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Tue, 28 Jan 2020 18:09:47 GMT
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 02:07:11 GMT
+	Password can change Time :	Mon, 13 Jan 2020 02:07:11 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x457
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000001
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	j.wakefield
+	Full Name   :	James Wakefield
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Thu, 09 Jan 2020 20:34:44 GMT
+	Password can change Time :	Thu, 09 Jan 2020 20:34:44 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x45c
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	s.hickson
+	Full Name   :	Stephanie Hickson
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 01:24:28 GMT
+	Password can change Time :	Mon, 13 Jan 2020 01:24:28 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x461
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	j.goodhand
+	Full Name   :	John Goodhand
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 01:40:26 GMT
+	Password can change Time :	Mon, 13 Jan 2020 01:40:26 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x462
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	a.turnbull
+	Full Name   :	Adrian Turnbull
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 01:43:13 GMT
+	Password can change Time :	Mon, 13 Jan 2020 01:43:13 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x464
+	group_rid:	0x201
+	acb_info :	0x00000214
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	e.crowe
+	Full Name   :	Edward Crowe
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 03:45:02 GMT
+	Password can change Time :	Mon, 13 Jan 2020 03:45:02 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x467
+	group_rid:	0x201
+	acb_info :	0x00000211
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	b.hanson
+	Full Name   :	Ben Hanson
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 16:35:39 GMT
+	Password can change Time :	Mon, 13 Jan 2020 16:35:39 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x468
+	group_rid:	0x201
+	acb_info :	0x00000211
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	d.burman
+	Full Name   :	David Burman
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 16:36:13 GMT
+	Password can change Time :	Mon, 13 Jan 2020 16:36:13 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x469
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	BackupSvc
+	Full Name   :	BackupSvc
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 16:37:03 GMT
+	Password can change Time :	Mon, 13 Jan 2020 16:37:03 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x46a
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	j.allen
+	Full Name   :	Joseph Allen
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Mon, 13 Jan 2020 17:24:00 GMT
+	Password can change Time :	Mon, 13 Jan 2020 17:24:00 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x46e
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...
+	User Name   :	i.croft
+	Full Name   :	Ian Croft
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	MapDataDrive.vbs
+	Description :	
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	Thu, 01 Jan 1970 01:00:00 BST
+	Logoff Time              :	Thu, 01 Jan 1970 01:00:00 BST
+	Kickoff Time             :	Thu, 14 Sep 30828 03:48:05 BST
+	Password last set Time   :	Wed, 15 Jan 2020 21:46:22 GMT
+	Password can change Time :	Wed, 15 Jan 2020 21:46:22 GMT
+	Password must change Time:	Thu, 14 Sep 30828 03:48:05 BST
+	unknown_2[0..31]...
+	user_rid :	0x46f
+	group_rid:	0x201
+	acb_info :	0x00000211
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000000
+	padding1[0..7]...
+	logon_hrs[0..21]...

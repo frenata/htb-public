@@ -1,0 +1,10 @@
+200       16l      101w      854c http://api-prod.horizontall.htb/admin
+200       16l      101w      854c http://api-prod.horizontall.htb/Admin
+403        1l        1w       60c http://api-prod.horizontall.htb/users
+200       19l       33w      413c http://api-prod.horizontall.htb/index.html
+200        1l       21w      507c http://api-prod.horizontall.htb/reviews
+200       16l      101w      854c http://api-prod.horizontall.htb/ADMIN
+403        1l        1w       60c http://api-prod.horizontall.htb/Users
+200        3l       21w      121c http://api-prod.horizontall.htb/robots.txt
+200        0l        0w        0c http://api-prod.horizontall.htb/abc
+200        1l       21w      507c http://api-prod.horizontall.htb/Reviews

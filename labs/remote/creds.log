@@ -1,0 +1,3 @@
+ 213  2020-02-20 00:21:36,660 [P4408/D20/T37] INFO  Umbraco.Core.Security.BackOfficeSignInMana     ger - Event Id: 0, state: Login attempt failed for username Umbracoadmin123!! from IP add     ress 192.168.195.1$
+  214  2020-02-20 00:21:42,642 [P4408/D20/T16] INFO  Umbraco.Core.Security.BackOfficeSignInMana     ger - Event Id: 0, state: Login attempt succeeded for username admin@htb.local from IP ad     dress 192.168.195.1$
+

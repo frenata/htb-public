@@ -1,0 +1,12 @@
+# Nmap 7.91 scan initiated Sat May 29 19:59:35 2021 as: nmap --script smb-vuln* -p 445 -oA logs/nmap/smb-vuln 10.10.10.239
+Nmap scan report for staging.love.htb (10.10.10.239)
+Host is up (0.42s latency).
+
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Host script results:
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: NT_STATUS_ACCESS_DENIED
+
+# Nmap done at Sat May 29 19:59:49 2021 -- 1 IP address (1 host up) scanned in 13.67 seconds

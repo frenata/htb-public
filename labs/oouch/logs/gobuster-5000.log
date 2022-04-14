@@ -1,0 +1,25 @@
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://10.10.10.177:5000
+[+] Threads:        10
+[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] Cookies:        session=.eJxlj8tqAzEMAH_F8TkUvx_7FaU99FBCkGUpWbrJlrX3FPLvNe2xJyGkgZmHPPMC7UpNTp8PKfoY8katwYXkUb4uBI3Esl7EfBd9FYA4jqJf5ya-x8-LPD2P_7k3usytb9Dn9S7e91-I9-UgPmjB9UaC17XAdhj06TgUNmpXOfVtp7HNVU6yZEAK1lLR2aRoKjB69qVAiiFZxIgEhtA7m0NEy-TAKwyqYHRFO21s4KoVsdIKclURvA5JW5WqR05OBQBNGK3jQi7mYquB5H1WdeB5RGDb-NzXL7oPH-cG7Vy0NYD2w82zLqOLlUdnwFtt2eqsBrc32v4ijHz-ABoNa7s.Xsl8gw.GeJhEe0nS1maI2OIeEWzOk_yXmE
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2020/05/23 15:48:26 Starting gobuster
+===============================================================
+/about (Status: 200)
+/contact (Status: 200)
+/home (Status: 200)
+/login (Status: 302)
+/register (Status: 302)
+/profile (Status: 200)
+/documents (Status: 200)
+/logout (Status: 302)
+===============================================================
+2020/05/23 16:13:14 Finished
+===============================================================

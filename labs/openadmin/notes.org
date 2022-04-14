@@ -1,0 +1,33 @@
+* ports
+
+80 and 22
+
+** http
+apache default
+
+dirsearch reveals a ~/music/~ path, logging in there immediately logs into an admin panel
+
+exploit for this version of OpenNetAdmin:
+https://vuldb.com/?id.146798
+
+Was able to use this to get a ~www-data~ shell, can extract various php files and get database creds
+
+Next:
+ * upgrade the shell and connect to database?
+ * use an out of the box exploit against the db?
+
+LOLZ it turns out the ona password was also jimmy's system pass
+
+NOTE: ALWAYS TRY PASSWORDS
+
+running a local PHP server against /var/www/internal produces a secret login page, cracking that hash gives the pasword: 'Revealed', but it can't cat out joanna's ssh key
+
+apparently these secret pages are being run internally, against port 52846 as *joanna*.
+curling that executes the script and prints the rsa key... but it's encrypted
+
+ssh2john and john can grab the hash of the key and crack it though: ~bloodninja~
+
+~sudo -l~ reveals that joanna can edit a root readable file with nano, which means we can save it where we want, including to:
+~/root/.ssh/authorized_keys~, while adding a public key
+
+FIN

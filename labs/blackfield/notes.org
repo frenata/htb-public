@@ -1,0 +1,10 @@
+* Blackfield
+** Enumeration
+*** Samba
+Can anonymously list and connect to ~profiles$~, and thus extract a list of users.
+
+Tryng ~GetNPU~ on all users reveals two distinct entries: 
+ * audit, which responds with NO_PREAUTH
+ * support, which returns a TGT
+** Foothold
+** Escalation

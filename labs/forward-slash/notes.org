@@ -1,0 +1,73 @@
+* Forward Slash
+** Enumeration
+*** 22
+*** 80
+
+Defaced page at vhost ~forwardslash.htb~, makes mention of automatic ftp login, xml redirect and sharon.
+
+~gobuster~ on vhost reveals another vhost: ~backup.forwardslash.htb~, hopefully the original and insecure site.
+
+*** backup.forwardslash.htb
+ /dev 403 forbidden from host, probably accessible from localhost later
+ /login
+ /index
+ /register
+
+We can register as a user and poke around:
+ * /profilepicture has a 'disabled' upload form, but that doesn't really mean anything, the POST handler probably still works. ;)
+ * updusername allows submissions, but doesn't seem to work
+ * environment has a dynamic message about the catgirls 
+  
+TODO:
+ * check all forms for SQLI
+ * check profilepicture form for RFI
+
+**** profilepicture
+
+can successfully send a remote or local PHP file, which will have its text included
+
+Need more info about this 'XML API'
+
+** Foothold
+   
+LFI on profilepicture:
+
+~curl -POST http://backup.forwardslash.htb/profilepicture.php -H 'Cookie: PHPSESSID=7d25i307p1ldiq5etocttg5j4j' -d url=/etc/passwd~
+
+But most ~.php~ files seem to be blacklisted. :(
+
+Tried a variety of different filter bypasses, but with little success:
+ * https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b  
+ * https://ec.haxx.se/http/http-post
+ * https://www.secjuice.com/php-rce-bypass-filters-sanitization-waf/
+ * https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/File%20Inclusion#wrapper-phpfilter
+   
+Finally with the help of that last site, got a working bypass. As expected, ~dev/index.php~ is super juicy.
+
+** Escalation
+
+*** chiv > pain
+
+First search for executables owned by ~pain~:
+
+find / executable -user pain 2>/dev/null
+
+and find ~backup~!
+
+~strace backup~ shows it's reading the current time and looking for a particular file
+
+Tried to reverse what it's using for the hash, but it doesn't really matter, since it repeats within the same minute:
+
+#+BEGIN_SRC bash
+hash=`backup | tail -n 1 | awk '{print $2}'`
+ln -s $1 $hash
+backup
+#+END_SRC
+
+Can do an arbitrary read on files readable by ~pain~. No SSH creds :( but ~/var/backups/config.php.bak~ looks like it has a hashed password for pain.
+
+I'm stupid -- it's just plaintext!
+
+*** pain > root
+
+Got a encrypter/decrypter python script to figure out. ;0

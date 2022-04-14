@@ -1,0 +1,12 @@
+Mates,
+
+After the domain compromise and computer forensic last week, auditors advised us to:
+- change every passwords -- Done.
+- change krbtgt password twice -- Done.
+- disable auditor's account (audit2020) -- KO.
+- use nominative domain admin accounts instead of this one -- KO.
+
+We will probably have to backup & restore things later.
+- Mike.
+
+PS: Because the audit report is sensitive, I have encrypted it on the desktop (root.txt)

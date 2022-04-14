@@ -1,0 +1,11 @@
+* Multimaster
+** Enumeration
+*** Scans
+**** 53 - DNS
+Reverse dig lookup reveals nothing
+**** 123 - NTP
+** Foothold
+the ~getColleagues~ api returns 403 in some cases, looks like SQLI attack:
+
+~http POST 10.10.10.179/api/getColleagues name="'"~
+** Escalation

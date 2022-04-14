@@ -1,0 +1,94 @@
+* Book
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Sun May 10 16:21:33 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.176
+Nmap scan report for 10.10.10.176
+Host is up (0.028s latency).
+Not shown: 998 closed ports
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+*** 22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 f7:fc:57:99:f6:82:e0:03:d6:03:bc:09:43:01:55:b7 (RSA)
+|   256 a3:e5:d1:74:c4:8a:e8:c8:52:c7:17:83:4a:54:31:bd (ECDSA)
+|_  256 e3:62:68:72:e2:c0:ae:46:67:3d:cb:46:bf:69:b9:6a (ED25519)
+*** 80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: LIBRARY - Read | Learn | Have Fun
+
+Library service that you can login/signup for.
+Check:
+ * validation of username/passwords
+ * login
+ * signup
+ * profile.php (updating username)
+ * contact.php (send message)
+ * download.php (seems to give back blank pdf for most IDs, should try to look for real IDs though?)
+ * collections.php (book submission -- allows upload of a file, if we can directory traverse may be able to get a reverse shell)
+ * search.php (search for books)
+
+** Foothold
+
+names/emails are truncated on signup, so we can take advantage of this to avoid the dupe detection:
+
+name: whatever
+email: admin@book.htb++++++SOMETEXT
+pass: whatever   
+
+This works because the system *first* checks for a dupe, which the email is not, then truncates, then strips whitespace, at which point the the email is just hte admin email, so we've successfully mutated the admin password!
+
+Gotta be fast after registration since others are doing this too! In lieu of a script, an easier way is to fill in the form on ~admin~, use Burp's repeater to register, then immediately switch tabs and login.
+
+Lost a bunch of time in ~/admin~ looking for a way to review user submissions, but it doesn't seem to be there.
+
+After some tooling around, the path forward is finally clear: hold open two sessions, one admin and one normal user.
+user: upload a new book submission, attaching a PDF with a reverse-shell payload in the XML
+admin: download collections.pdf to find the random id number of the submission
+user: download the pdf that was just uploaded
+
+This *should* get a shell.
+
+Or not!
+
+https://www.noob.ninja/2017/11/local-file-read-via-xss-in-dynamically.html
+
+points the way to take advantage of the dynamically generated pdfs... the content of the upload is actually irrelevant, since it's only the "Collections" pdf that's dynamically generated.
+
+The payload to the submission form is as follows:
+
+book: ~><script>x=new XMLHttpRequest;x.onload=function(){document.write(this.responseText)};x.open("GET","file:///etc/passwd");x.send();</script><~
+author: whatever
+upload: any pdf
+
+then in the admin portal download the collections pdf and the contents of ~/etc/passwd~ will be present!
+
+From ~/etc/passwd~ I can see what users are on the system and target the only one aside from root that has a home dir and a login shell: reader.
+
+In the next payload I read ~/home/reader/.ssh/id_rsa~ and I get back a private key. :)
+
+USER: 51c1d4b5197fa30e3e5d37f8778f95bc
+** Escalation
+   
+*pspy* reveals a bunch of process chatter, the most notable of which is ~logrotate~.
+
+Some searching and reading reveals that this service is vulnerable to a timing attack:
+ * https://github.com/whotwagner/logrotten
+ * https://tech.feedyourhead.at/content/abusing-a-race-condition-in-logrotate-to-elevate-privileges
+ * https://hackerone.com/reports/578119
+
+Two key things tripped me up in exploiting this vuln: 
+ 1. figuring out which logfiles were being rotated (somehow I just assumed it wasn't ~/home/reader/backups~ for a long time!)
+ 2. stubbornly trying to execute a reverse shell as the examples showed.
+
+Eventually I got smart, realized I could consistently trigger ~logrotten~ by appending to ~/home/reader/backups/access.log~, and instead of trying for a reverse shell, had the payload copy and chown root's SSH key.
+
+The payload:
+~cp /root/.ssh/id_rsa /home/reader/.frenata && chown reader:reader /home/reader/.frenata/id_rsa~
+
+The logrotten invocation:
+~./logrotten -p pay2 /home/reader/backups/access.log -s 3~
+
+ROOT: 84da92adf998a1c7231297f70dd89714

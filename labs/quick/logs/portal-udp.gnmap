@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Sun May 17 19:31:45 2020 as: nmap -sU -oA logs/portal-udp portal.quick.htb
+Host: 10.10.10.186 (quick.htb)	Status: Up
+Host: 10.10.10.186 (quick.htb)	Status: Up
+# Nmap done at Sun May 17 19:48:55 2020 -- 1 IP address (1 host up) scanned in 1029.08 seconds

@@ -1,0 +1,16 @@
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-29 18:28 UTC
+Nmap scan report for ip-10-10-10-239.ec2.internal (10.10.10.239)
+Host is up (0.0090s latency).
+Not shown: 91 closed ports
+PORT     STATE    SERVICE
+80/tcp   open     http
+106/tcp  filtered pop3pw
+135/tcp  open     msrpc
+139/tcp  open     netbios-ssn
+443/tcp  open     https
+445/tcp  open     microsoft-ds
+1026/tcp filtered LSA-or-nterm
+3306/tcp open     mysql
+5000/tcp open     upnp
+
+Nmap done: 1 IP address (1 host up) scanned in 1.30 seconds

@@ -1,0 +1,103 @@
+* Dyplesher
+** Enumeration
+*** ports
+**** 22 ssh
+**** 80 http
+~dyplesher.htb~
+***** staff pages
+Don't seem to work, port is 8080 which doesn't appear open. Maybe only from localhost?
+***** login / register (dypleshero)
+Register just redirects to login with email / pass form
+***** test.dyplehsher.htb
+Add key and value to memcache form
+***** youtube link
+https://www.youtube.com/watch?v=hCKmBmJdpho
+KA5PERHEKMATYA
+***** 'worst minecraft server'
+googling brings up https://en.wikipedia.org/wiki/2b2t
+***** other vhost?
+gobuster just returns all success :(
+**** 3000 - gogs  0.11.91.0811 
+Same three staff members mentioned -- can self-register and create repos (this seems to be a complete gogs install), but not discover any repositories
+Investigate:
+ * for version of ~gogs~, are there any exploits for spoofing user auth or gaining access to private repos?
+ * can creds for one of the existing users be harvested elsewhere and then used here
+**** 4369/tcp  open   epmd       Erlang Port Mapper Daemon
+| epmd-info: 
+|   epmd_port: 4369
+|   nodes: 
+|_    rabbit: 25672
+**** 5672/tcp  open   amqp       RabbitMQ 3.7.8 (0-9)
+| amqp-info: 
+|   capabilities: 
+|     publisher_confirms: YES
+|     exchange_exchange_bindings: YES
+|     basic.nack: YES
+|     consumer_cancel_notify: YES
+|     connection.blocked: YES
+|     consumer_priorities: YES
+|     authentication_failure_close: YES
+|     per_consumer_qos: YES
+|     direct_reply_to: YES
+|   cluster_name: rabbit@dyplesher
+|   copyright: Copyright (C) 2007-2018 Pivotal Software, Inc.
+|   information: Licensed under the MPL.  See http://www.rabbitmq.com/
+|   platform: Erlang/OTP 22.0.7
+|   product: RabbitMQ
+|   version: 3.7.8
+|   mechanisms: PLAIN AMQPLAIN
+|_  locales: en_US
+**** 11211/tcp open   memcache?
+**** 25562/tcp open   unknown
+**** 25565/tcp open   minecraft?
+| fingerprint-strings: 
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, LDAPSearchReq, LPDString, SIPOptions, SSLSessionReq, TLSSessionReq, afp, ms-sql-s, oracle-tns: 
+|     '{"text":"Unsupported protocol version"}
+|   NotesRPC: 
+|     q{"text":"Unsupported protocol version 0, please use one of these versions:
+|_    1.8.x, 1.9.x, 1.10.x, 1.11.x, 1.12.x"}
+**** 25572/tcp closed unknown
+**** 25672/tcp open   unknown
+*** cookies
+_csrf:"HCqNs0d2i_0Bns0ABQ-F9Z2ywnI6MTU5MTAyMjY3MjU5NDgwODc2MA%3D%3D"
+i_like_gogs:"48766962a9e87ba7"
+laravel_session:"eyJpdiI6Ilg4ak1oejl6RkhhZnNPUTdPKzFUWUE9PSIsInZhbHVlIjoiQzI3NkJ2TTZVVmZEZE05cGxLajFSdGJ4NmgxWExmVVJEcmhwZDR4RVJ1MmdSVzVCWWM4MXdoblFVT0JwQ3lJMCIsIm1hYyI6IjRhZDBjYjBiZWVkOWI3NTM5MWJlOTU0NTBjYzMzY2M5ODY5MjgxZmI4YjM3ZjAzM2I2YjkzNjAxZDViNmY3MWYifQ%3D%3D"
+XSRF-TOKEN:"eyJpdiI6IjNhS2E1MFllNnFcL3VGSEt2T0s3Q1wvdz09IiwidmFsdWUiOiJoRFhzWDlncWF0aXZpVURhXC9adEFwQTF5VmxRR0ZGUDhmZytaQzZZRjN5cHdNTnY4OERxV241UVFFN21GdUtXWiIsIm1hYyI6ImExNTE3Mzc0YTFmMWE1ZTUxNmVjMjkxZjM0YTM2MWFjZjRjNjRlNGUwODhhZDVlNDM4N2IzNDM3NjcwNzRiYzUifQ%3D%3D"
+
+** Foothold
+DONE:
+ * fuzz ~dyplesher.htb~
+ * decrypt laravel cookie
+   This doesn't seem to be feasible without the APP_KEY. I'm guessing that once I gain access to the gogs repo, I'll find the APP_KEY there and can decrypt and spoof the login on the main site.
+ * gogs CVE?
+   there are several -- but all the ones identified are for previous versions
+
+TODO: 
+ * see if anything is extractable from ~i_like_gogs~ / ~_csrf~ cookie
+ * try to login to dyplesher or gogs with known emails and various suspicious words found
+ * fuzz ~test.dyplesher.htb~
+ * sqli on ~test.dyplesher.htb~, ~dyplesher.htb/login~
+   don't really think this will work, but it doesn't hurt to try
+   
+*** Crafting a Malicious Plugin
+https://bukkit.gamepedia.com/Plugin_Tutorial
+https://bukkit.gamepedia.com/Scheduler_Programming
+https://jd.bukkit.org/org/bukkit/scheduler/BukkitRunnable.html#runTaskAsynchronously(org.bukkit.plugin.Plugin)
+
+*** Erlang/Rabbit
+https://insinuator.net/2017/10/erlang-distribution-rce-and-a-cookie-bruteforcer/
+https://nvd.nist.gov/vuln/detail/CVE-2018-1279
+https://www.rabbitmq.com/access-control.html
+
+*** Laravel Cookie Forgery
+https://labs.f-secure.com/archive/laravel-cookie-forgery-decryption-and-rce/
+
+*** Connecting to RabbitMQ
+https://www.rabbitmq.com/management-cli.html
+https://www.rabbitmq.com/tutorials/tutorial-one-python.html
+https://www.rabbitmq.com/tutorials/tutorial-three-python.html
+https://pika.readthedocs.io/en/stable/modules/connection.html
+
+*** Cuberite plugin
+https://api.cuberite.org/
+https://www.tutorialspoint.com/lua/lua_file_io.htm

@@ -1,0 +1,20 @@
+{
+  "_flashes": [
+    {
+      " t": [
+        "message",
+        "Please log in to access this page."
+      ]
+    },
+    {
+      " t": [
+        "message",
+        "Registration Successful! Welcome foobar!"
+      ]
+    }
+  ],
+  "_fresh": true,
+  "_id": "b9ace633eb192872dafc5f5bba87683cc7cea2ec543967c3fe4a50c60bc74b141236fd10ef010a9d07a51681308d5cf8406aa1ec734fbe479b3d2a85590db149",
+  "csrf_token": "441684473d6a15ace5f1bccef05c42a5313f3190",
+  "user_id": "2"
+}

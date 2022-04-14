@@ -1,0 +1,45 @@
+
+ _|. _ _  _  _  _ _|_    v0.3.9
+ (_||| _) (/_(_|| (_| )
+
+ Extensions: php, asp, aspx, jsp, js, html, do, action | HTTP method: get | Threads: 10 | Wordlist size: 8688
+
+ Error Log: /home/user/src/dirsearch/logs/errors-20-05-07_01-58-50.log
+
+ Target: http://10.10.10.187
+
+ [01:58:51] Starting:
+ [01:58:52] 403 -  277B  - /.hta               
+ [01:58:52] 403 -  277B  - /.ht_wsr.txt
+ [01:58:52] 403 -  277B  - /.htaccess-dev
+ [01:58:52] 403 -  277B  - /.htaccess-local
+ [01:58:52] 403 -  277B  - /.htaccess.BAK
+ [01:58:52] 403 -  277B  - /.htaccess.bak1
+ [01:58:52] 403 -  277B  - /.htaccess-marco
+ [01:58:52] 403 -  277B  - /.htaccess.sample
+ [01:58:52] 403 -  277B  - /.htaccess.old
+ [01:58:52] 403 -  277B  - /.htaccess.save
+ [01:58:52] 403 -  277B  - /.htaccess.orig
+ [01:58:52] 403 -  277B  - /.htaccess.txt
+ [01:58:52] 403 -  277B  - /.htaccess_extra
+ [01:58:52] 403 -  277B  - /.htaccess_orig
+ [01:58:52] 403 -  277B  - /.htaccessOLD
+ [01:58:52] 403 -  277B  - /.htaccess_sc
+ [01:58:52] 403 -  277B  - /.htaccess~
+ [01:58:52] 403 -  277B  - /.htaccessOLD2
+ [01:58:52] 403 -  277B  - /.htaccessBAK
+ [01:58:52] 403 -  277B  - /.htpasswd-old
+ [01:58:52] 403 -  277B  - /.htpasswd_test
+ [01:58:52] 403 -  277B  - /.htusers
+ [01:58:52] 403 -  277B  - /.htgroup
+ [01:58:52] 403 -  277B  - /.htpasswds
+ [01:59:06] 301 -  313B  - /assets  ->  http://10.10.10.187/assets/
+ [01:59:14] 301 -  313B  - /images  ->  http://10.10.10.187/images/
+ [01:59:15] 200 -    6KB - /index.php
+ [01:59:15] 200 -    6KB - /index.php/login/
+ [01:59:23] 200 -  138B  - /robots.txt
+ [01:59:23] 403 -  277B  - /server-status/
+ [01:59:23] 403 -  277B  - /server-status
+
+ Task Completed
+

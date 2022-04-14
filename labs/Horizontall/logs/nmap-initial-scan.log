@@ -1,0 +1,71 @@
+Starting Nmap 7.91 ( https://nmap.org ) at 2022-01-08 17:37 UTC
+Stats: 0:00:23 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
+Service scan Timing: About 66.67% done; ETC: 17:38 (0:00:11 remaining)
+Nmap scan report for ip-10-10-11-105.ec2.internal (10.10.11.105)
+Host is up (0.016s latency).
+Not shown: 997 closed ports
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
+80/tcp   open  http    nginx 1.14.0 (Ubuntu)
+8080/tcp open  http    (PHP 7.4.22)
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8080-TCP:V=7.91%I=7%D=1/8%Time=61D9CBF2%P=x86_64-pc-linux-gnu%r(Get
+SF:Request,23BC,"HTTP/1\.0\x20200\x20OK\r\nCache-Control:\x20no-cache,\x20
+SF:private\r\nContent-Type:\x20text/html;\x20charset=UTF-8\r\nDate:\x20Sat
+SF:,\x2008\x20Jan\x202022\x2017:38:30\x20GMT\r\nDate:\x20Sat,\x2008\x20Jan
+SF:\x202022\x2017:38:30\x20GMT\r\nHost:\x20127\.0\.0\.1:8000\r\nSet-Cookie
+SF::\x20XSRF-TOKEN=eyJpdiI6IklnTVFsNWZyaHU2dXpCRWNvUllkS3c9PSIsInZhbHVlIjo
+SF:iNzJkMGJvY2RYQ250cVdQVFBpM2plUFBPYTNReXJpYjYxZUxvR1pOT0dLaGpXZXZDOHJ6WX
+SF:Y1c3k5Z01pQlROUTYxd3IzeEwrTnZLQmZjUDRIMi9KS005MnIrV1F5M094UUZVcFRPNVV4c
+SF:TJ6eStIbG5SSlRONnJZZ0k0QmZhdDIiLCJtYWMiOiIzZmJmY2M4NmMyOWY4M2NjZGYyNTdm
+SF:MGI0ZjI4ZTdjNzlkY2IxNTg1ZTQyY2NkYTVmOWRkM2ZjODkwMDA5MGMxIn0%3D;\x20expi
+SF:res=Sat,\x2008-Jan-2022\x2019:38:30\x20GMT;\x20Max-Age=7200;\x20path=/;
+SF:\x20samesite=lax\r\nSet-Cookie:\x20laravel_session=eyJpdiI6Im50Z3V1MDBj
+SF:SFV2cVpzempNZHh4eHc9PSIsInZhbHVlIjoiNVBvcHlLdTJzMDhpUGdMRnBVbkYweW02dFV
+SF:ZMXQ3S1VpMWc1dFNnZlVmQnhTdGdWOFhQdmJZSllyV1gzRGlaWjlnVUltRTEwOFJaa3IwMU
+SF:VKZTI3OU94UC8xcnlHemd5VHdwd3VWcDNXby9BM2pFb1JZRDUwd0VFaDNlZm9hNzAiLCJtY
+SF:WMiOiI3MWE4NmU5ZDYxZWU")%r(HTTPOptions,E8,"HTTP/1\.0\x20200\x20OK\r\nAl
+SF:low:\x20GET,HEAD\r\nCache-Control:\x20no-cache,\x20private\r\nContent-T
+SF:ype:\x20text/html;\x20charset=UTF-8\r\nDate:\x20Sat,\x2008\x20Jan\x2020
+SF:22\x2017:38:30\x20GMT\r\nDate:\x20Sat,\x2008\x20Jan\x202022\x2017:38:30
+SF:\x20GMT\r\nHost:\x20127\.0\.0\.1:8000\r\nX-Powered-By:\x20PHP/7\.4\.22\
+SF:r\n\r\n")%r(RTSPRequest,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nConte
+SF:nt-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\
+SF:n400\x20Bad\x20Request")%r(FourOhFourRequest,15DA,"HTTP/1\.0\x20404\x20
+SF:Not\x20Found\r\nCache-Control:\x20no-cache,\x20private\r\nContent-Type:
+SF:\x20text/html;\x20charset=UTF-8\r\nDate:\x20Sat,\x2008\x20Jan\x202022\x
+SF:2017:38:30\x20GMT\r\nDate:\x20Sat,\x2008\x20Jan\x202022\x2017:38:30\x20
+SF:GMT\r\nHost:\x20127\.0\.0\.1:8000\r\nX-Powered-By:\x20PHP/7\.4\.22\r\n\
+SF:r\n<!DOCTYPE\x20html>\n<html\x20lang=\"en\">\n\x20\x20\x20\x20<head>\n\
+SF:x20\x20\x20\x20\x20\x20\x20\x20<meta\x20charset=\"utf-8\">\n\x20\x20\x2
+SF:0\x20\x20\x20\x20\x20<meta\x20name=\"viewport\"\x20content=\"width=devi
+SF:ce-width,\x20initial-scale=1\">\n\n\x20\x20\x20\x20\x20\x20\x20\x20<tit
+SF:le>Not\x20Found</title>\n\n\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20Font
+SF:s\x20-->\n\x20\x20\x20\x20\x20\x20\x20\x20<link\x20rel=\"preconnect\"\x
+SF:20href=\"https://fonts\.gstatic\.com\">\n\x20\x20\x20\x20\x20\x20\x20\x
+SF:20<link\x20href=\"https://fonts\.googleapis\.com/css2\?family=Nunito&di
+SF:splay=swap\"\x20rel=\"stylesheet\">\n\n\x20\x20\x20\x20\x20\x20\x20\x20
+SF:<style>\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20/\*!\x20normal
+SF:ize\.css\x20v8\.0\.1\x20\|\x20MIT\x20License\x20\|\x20github\.com/necol
+SF:as/normalize\.css\x20\*/html{line-height:1\.15;-webkit-text-size-adjust
+SF::100%}body{margin:0}a{background-color:transparent}code{font-family:mon
+SF:ospace,monospace;font-size:1em}\[hidden\]{display:none}html{font-family
+SF::system-ui,-");
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.91%E=4%D=1/8%OT=22%CT=1%CU=36817%PV=Y%DS=2%DC=I%G=Y%TM=61D9CC14
+OS:%P=x86_64-pc-linux-gnu)SEQ(SP=105%GCD=1%ISR=107%TI=Z%CI=Z%II=I%TS=A)OPS(
+OS:O1=M54BST11NW7%O2=M54BST11NW7%O3=M54BNNT11NW7%O4=M54BST11NW7%O5=M54BST11
+OS:NW7%O6=M54BST11)WIN(W1=FE88%W2=FE88%W3=FE88%W4=FE88%W5=FE88%W6=FE88)ECN(
+OS:R=Y%DF=Y%T=40%W=FAF0%O=M54BNNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS
+OS:%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=
+OS:Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=
+OS:R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T
+OS:=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=
+OS:S)
+
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 40.91 seconds

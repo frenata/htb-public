@@ -1,0 +1,18 @@
+total 64K
+drwxr-xr-x 10 MinatoTW MinatoTW 4.0K May 20 13:41 .
+drwxr-xr-x  6 root     root     4.0K Apr 23 13:58 ..
+drwxr-xr-x  2 root     root     4.0K Apr 23 12:53 backup
+lrwxrwxrwx  1 root     root        9 Apr 23 15:13 .bash_history -> /dev/null
+-rw-r--r--  1 MinatoTW MinatoTW  220 Apr 23 08:10 .bash_logout
+-rw-r--r--  1 MinatoTW MinatoTW 3.7K Apr 23 08:10 .bashrc
+drwx------  2 MinatoTW MinatoTW 4.0K Apr 23 15:20 .cache
+drwxrwxr-x  3 MinatoTW MinatoTW 4.0K Apr 23 10:24 .composer
+drwxrwxr-x 11 MinatoTW MinatoTW 4.0K Apr 23 15:14 Cuberite
+-rw-rw-r--  1 MinatoTW MinatoTW   54 Apr 23 09:16 .gitconfig
+drwx------  3 MinatoTW MinatoTW 4.0K Apr 23 15:20 .gnupg
+drwxrwxr-x  3 MinatoTW MinatoTW 4.0K Apr 23 09:08 .local
+drwxrwxr-x  6 MinatoTW MinatoTW 4.0K Apr 23 09:58 paper
+-rw-r--r--  1 MinatoTW MinatoTW  807 Apr 23 08:10 .profile
+-rw-rw-r--  1 MinatoTW MinatoTW   66 Apr 23 09:08 .selected_editor
+drwx------  2 MinatoTW MinatoTW 4.0K May 20 13:45 .ssh
+-rw-------  1 MinatoTW MinatoTW  802 Apr 23 15:18 .viminfo

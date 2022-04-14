@@ -1,0 +1,314 @@
+[16:41:12] dumping options:
+	filename: </usr/share/sfuzz-db/basic.rtsp>
+	state:    <8>
+	lineno:   <20>
+	literals:  [30]
+	sequences: [31]
+	symbols: [0]
+	req_del:  <200>
+	mseq_len: <50050>
+	plugin: <none>
+	s_syms: <0>
+	literal[1] = [�]
+	literal[2] = [�]
+	literal[3] = [�]
+	literal[4] = [%n]
+	literal[5] = [%#123456x]
+	literal[6] = [%s]
+	literal[7] = [%%s]
+	literal[8] = [%20s]
+	literal[9] = [%%20s]
+	literal[10] = [%20x]
+	literal[11] = [%%20x]
+	literal[12] = [%n%n%n%n%n]
+	literal[13] = [%p%p%p%p%p]
+	literal[14] = [%x%x%x%x%x]
+	literal[15] = [%d%d%d%d%d]
+	literal[16] = [%s%s%s%s%s]
+	literal[17] = [%s%p%x%d]
+	literal[18] = [%.1024d]
+	literal[19] = [%.1025d]
+	literal[20] = [%.2048d]
+	literal[21] = [%.2049d]
+	literal[22] = [%.4096d]
+	literal[23] = [%.4097d]
+	literal[24] = [%99999999999s]
+	literal[25] = [%08x]
+	literal[26] = [%%20d]
+	literal[27] = [%%20n]
+	literal[28] = [%%20x]
+	literal[29] = [%%20s]
+	literal[30] = [%#0123456x%08x%x%s%p%d%n%o%u%c%h%l%q%j%z%Z%t%i%e%g%f%a%C%S%08x%%]
+	sequence[1] = [A]
+	sequence[2] = [�]
+	sequence[3] = [�]
+	sequence[4] = [�]
+	sequence[5] = [%n]
+	sequence[6] = [%#123456x]
+	sequence[7] = [%s]
+	sequence[8] = [%%s]
+	sequence[9] = [%20s]
+	sequence[10] = [%%20s]
+	sequence[11] = [%20x]
+	sequence[12] = [%%20x]
+	sequence[13] = [%n%n%n%n%n]
+	sequence[14] = [%p%p%p%p%p]
+	sequence[15] = [%x%x%x%x%x]
+	sequence[16] = [%d%d%d%d%d]
+	sequence[17] = [%s%s%s%s%s]
+	sequence[18] = [%s%p%x%d]
+	sequence[19] = [%.1024d]
+	sequence[20] = [%.1025d]
+	sequence[21] = [%.2048d]
+	sequence[22] = [%.2049d]
+	sequence[23] = [%.4096d]
+	sequence[24] = [%.4097d]
+	sequence[25] = [%99999999999s]
+	sequence[26] = [%08x]
+	sequence[27] = [%%20d]
+	sequence[28] = [%%20n]
+	sequence[29] = [%%20x]
+	sequence[30] = [%%20s]
+	sequence[31] = [%#0123456x%08x%x%s%p%d%n%o%u%c%h%l%q%j%z%Z%t%i%e%g%f%a%C%S%08x%%]
+[16:41:12] info: beginning fuzz - method: tcp, config from: [/usr/share/sfuzz-db/basic.rtsp], out: [10.10.10.178:4386]
+[16:41:12] attempting fuzz - 1 (len: 102).
+[16:41:13] info: tx fuzz - (102 bytes) - scanning for reply.
+[16:41:13] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:13] attempting fuzz - 2 (len: 102).
+[16:41:13] info: tx fuzz - (102 bytes) - scanning for reply.
+[16:41:13] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:13] attempting fuzz - 3 (len: 102).
+[16:41:13] info: tx fuzz - (102 bytes) - scanning for reply.
+[16:41:13] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:13] attempting fuzz - 4 (len: 101).
+[16:41:13] info: tx fuzz - (101 bytes) - scanning for reply.
+[16:41:13] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:13] attempting fuzz - 5 (len: 108).
+[16:41:14] info: tx fuzz - (108 bytes) - scanning for reply.
+[16:41:14] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:14] attempting fuzz - 6 (len: 101).
+[16:41:14] info: tx fuzz - (101 bytes) - scanning for reply.
+[16:41:14] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:14] attempting fuzz - 7 (len: 102).
+[16:41:14] info: tx fuzz - (102 bytes) - scanning for reply.
+[16:41:14] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:14] attempting fuzz - 8 (len: 103).
+[16:41:14] info: tx fuzz - (103 bytes) - scanning for reply.
+[16:41:14] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:14] attempting fuzz - 9 (len: 104).
+[16:41:15] info: tx fuzz - (104 bytes) - scanning for reply.
+[16:41:15] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:15] attempting fuzz - 10 (len: 103).
+[16:41:15] info: tx fuzz - (103 bytes) - scanning for reply.
+[16:41:15] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:15] attempting fuzz - 11 (len: 104).
+[16:41:15] info: tx fuzz - (104 bytes) - scanning for reply.
+[16:41:15] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:15] attempting fuzz - 12 (len: 109).
+[16:41:15] info: tx fuzz - (109 bytes) - scanning for reply.
+[16:41:15] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:15] attempting fuzz - 13 (len: 109).
+[16:41:15] info: tx fuzz - (109 bytes) - scanning for reply.
+[16:41:16] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:16] attempting fuzz - 14 (len: 109).
+[16:41:16] info: tx fuzz - (109 bytes) - scanning for reply.
+[16:41:16] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:16] attempting fuzz - 15 (len: 109).
+[16:41:16] info: tx fuzz - (109 bytes) - scanning for reply.
+[16:41:16] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:16] attempting fuzz - 16 (len: 109).
+[16:41:16] info: tx fuzz - (109 bytes) - scanning for reply.
+[16:41:16] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:16] attempting fuzz - 17 (len: 107).
+[16:41:16] info: tx fuzz - (107 bytes) - scanning for reply.
+[16:41:17] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:17] attempting fuzz - 18 (len: 106).
+[16:41:17] info: tx fuzz - (106 bytes) - scanning for reply.
+[16:41:17] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:17] attempting fuzz - 19 (len: 106).
+[16:41:17] info: tx fuzz - (106 bytes) - scanning for reply.
+[16:41:17] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:17] attempting fuzz - 20 (len: 106).
+[16:41:17] info: tx fuzz - (106 bytes) - scanning for reply.
+[16:41:17] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:17] attempting fuzz - 21 (len: 106).
+[16:41:17] info: tx fuzz - (106 bytes) - scanning for reply.
+[16:41:18] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:18] attempting fuzz - 22 (len: 106).
+[16:41:18] info: tx fuzz - (106 bytes) - scanning for reply.
+[16:41:18] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:18] attempting fuzz - 23 (len: 106).
+[16:41:18] info: tx fuzz - (106 bytes) - scanning for reply.
+[16:41:18] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[16:41:18] attempting fuzz - 24 (len: 112).
+[16:41:18] info: tx fuzz - (112 bytes) - scanning for reply.
+[16:41:18] read:
+
+HQK Reporting Service V1.2
+
+>
+Unrecognised command
+>
+===============================================================================
+[1

@@ -1,0 +1,67 @@
+* Remote
+** enumeration
+   nmap:
+
+*** ftp
+
+allows anon, but no files present and no upload allowed
+
+*** http / 80
+
+80/tcp   open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Home - Acme Widgets
+
+*** rpcbind / 111
+
+*** msrpc / 135
+
+Dumped with rpcdump -- not sure if useful    
+
+*** netbios / 139
+
+*** samba / 445
+   
+No anon listing permitted
+
+*** mountd / 2049
+    
+~showmount -e $TARGET~
+shows a mount /site_backups
+
+Delivers a big backup of the 'Umbraco CMS', now go search for creds and db connections
+
+
+** foothold
+
+In site_backups:
+ * ./bin/log4net.xml:60:              <connectionString value="data source=SQLSVR;initial catalog
+   =test_log4net;integrated security=false;persist security info=True;User ID=sa;Password=sa"/>
+   
+~Umbraco.sdf~ is apparently a database dump, tried to find a way to read it as a database, but apparently usernames/hashes are available as plaintext.
+John cracks the admin hash:
+admin@htb.local:baconandcheese
+
+Use POC from https://www.exploit-db.com/exploits/46153 to upload ~nc.exe~, then (in a separate attack) use it to launch a reverse shell.
+
+Got *user*
+755513bff74ada324800dbb5acff5c24
+
+** escalation
+
+whoami
+iis apppool\defaultapppool
+
+First try winPEAS:
+
+  [+] Modifiable Services(T1007)                                                              
+   [?] Check if you can modify any service https://book.hacktricks.xyz/windows/windows-local-p
+rivilege-escalation#services                                                                  
+    LOOKS LIKE YOU CAN MODIFY SOME SERVICE/s:                                                 
+    UsoSvc: AllAccess, Start                                                                  
+                                   
+https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#modify-service-binary-path
+
+works to escalate!
+ROOT: aa408465f3f46bb78d4827f7a4b8e5e3
+
+** post-exploitation

@@ -1,0 +1,6 @@
+<History nbMaxFile="15" inSubMenu="no    " customLength="-1">$
+<File filename="C:\windows\System    32\drivers\etc\hosts" />$
+<File filename="\\HTB-NEST\Secure    $\IT\Carl\Temp.txt" />$
+<File filename="C:\Users\C.Smith\    Desktop\todo.txt" />$
+</History>$
+

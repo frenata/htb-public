@@ -1,0 +1,25 @@
+ QUERY FILES IN CURRENT DIRECTORY
+
+ [DIR]  Administrator
+ [DIR]  C.Smith
+ [DIR]  L.Frost
+ [DIR]  R.Thompson
+ [DIR]  TempUser
+
+ Current Directory: users
+ >
+
+  QUERY FILES IN CURRENT DIRECTORY
+
+  [DIR]  Administrator
+  [DIR]  All Users
+  [DIR]  Default
+  [DIR]  Default User
+  [DIR]  Public
+  [DIR]  Service_HQK
+  [DIR]  TempUser
+  [1]   desktop.ini
+
+  Current Directory: users
+  >
+

@@ -1,0 +1,39 @@
+* Magic
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Tue May 12 10:44:20 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.185
+Nmap scan report for 10.10.10.185
+Host is up (0.013s latency).
+Not shown: 998 closed ports
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+*** 22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 06:d4:89:bf:51:f7:fc:0c:f9:08:5e:97:63:64:8d:ca (RSA)
+|   256 11:a6:92:98:ce:35:40:c7:29:09:4f:6c:2d:74:aa:66 (ECDSA)
+|_  256 71:05:99:1f:a8:1b:14:d6:03:85:53:f8:78:8e:cb:88 (ED25519)
+*** 80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Magic Portfolio
+** Foothold
+
+Login form is vulnerable to SQLI   
+
+1. use SQLI to discover admin password to webapp
+2. upload a php webshell with jpeg magic bytes
+3. execute a reverse shell from the webshell so we can ~su~
+4. upgrade to bash with python
+5. ~su theseus~ with the found creds
+6. generate a key on attacker machine and add the pubkey to ~theseus~'s authorized_keys
+7. login with normal ~ssh~
+   
+USER: f2725835ff780223568b0caf2fc41b70
+
+** Escalation
+
+~sudo -l~ reveals nothing
+~linenum.sh~
+~pspy~ -- sysinfo (with setuid!) calls lshw relatively
+so manipulate path and reverse shell
+
+ROOT
+

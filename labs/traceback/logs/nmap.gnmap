@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Wed May  6 00:05:31 2020 as: nmap -Pn -sC -sV -oA nmap 10.10.10.181
+Host: 10.10.10.181 ()	Status: Up
+Host: 10.10.10.181 ()	Ports: 22/open/tcp//ssh//OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)/, 80/open/tcp//http//Apache httpd 2.4.29 ((Ubuntu))/, 1122/filtered/tcp//availant-mgr///, 1132/filtered/tcp//kvm-via-ip///, 1718/filtered/tcp//h323gatedisc///, 2046/filtered/tcp//sdfunc///, 3323/filtered/tcp//active-net///, 3370/filtered/tcp//satvid-datalnk///, 4005/filtered/tcp//pxc-pin///, 6003/filtered/tcp//X11:3///, 7025/filtered/tcp//vmsvc-2///, 10010/filtered/tcp//rxapi///, 10778/filtered/tcp//unknown///, 18101/filtered/tcp//unknown///, 30951/filtered/tcp//unknown///, 38292/filtered/tcp//landesk-cba///	Ignored State: closed (984)
+# Nmap done at Wed May  6 00:06:33 2020 -- 1 IP address (1 host up) scanned in 62.89 seconds

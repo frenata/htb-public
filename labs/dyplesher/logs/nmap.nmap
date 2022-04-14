@@ -1,0 +1,102 @@
+# Nmap 7.80 scan initiated Mon Jun  1 01:42:22 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.190
+Nmap scan report for 10.10.10.190
+Host is up (0.013s latency).
+Not shown: 997 filtered ports
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.0p1 Ubuntu 6build1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 7e:ca:81:78:ec:27:8f:50:60:db:79:cf:97:f7:05:c0 (RSA)
+|   256 e0:d7:c7:9f:f2:7f:64:0d:40:29:18:e1:a1:a0:37:5e (ECDSA)
+|_  256 9f:b2:4c:5c:de:44:09:14:ce:4f:57:62:0b:f9:71:81 (ED25519)
+80/tcp   open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Dyplesher
+3000/tcp open  ppp?
+| fingerprint-strings: 
+|   GenericLines, Help: 
+|     HTTP/1.1 400 Bad Request
+|     Content-Type: text/plain; charset=utf-8
+|     Connection: close
+|     Request
+|   GetRequest: 
+|     HTTP/1.0 200 OK
+|     Content-Type: text/html; charset=UTF-8
+|     Set-Cookie: lang=en-US; Path=/; Max-Age=2147483647
+|     Set-Cookie: i_like_gogs=0450ae212e146f3f; Path=/; HttpOnly
+|     Set-Cookie: _csrf=FetWi2hh11PMhP2Hp2m1TPrzNWA6MTU5MDk5MDM4MTQ4MTEzMTUzMA%3D%3D; Path=/; Expires=Tue, 02 Jun 2020 05:46:21 GMT; HttpOnly
+|     Date: Mon, 01 Jun 2020 05:46:21 GMT
+|     <!DOCTYPE html>
+|     <html>
+|     <head data-suburl="">
+|     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+|     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+|     <meta name="author" content="Gogs" />
+|     <meta name="description" content="Gogs is a painless self-hosted Git service" />
+|     <meta name="keywords" content="go, git, self-hosted, gogs">
+|     <meta name="referrer" content="no-referrer" />
+|     <meta name="_csrf" content="FetWi2hh11PMhP2Hp2m1TPrzNWA6MTU5MDk5MDM4MTQ4MTEzMTUzMA==" />
+|     <meta name="_suburl" content="" />
+|     <meta proper
+|   HTTPOptions: 
+|     HTTP/1.0 404 Not Found
+|     Content-Type: text/html; charset=UTF-8
+|     Set-Cookie: lang=en-US; Path=/; Max-Age=2147483647
+|     Set-Cookie: i_like_gogs=b9d6e451933a5977; Path=/; HttpOnly
+|     Set-Cookie: _csrf=waW8bGWUX58Wr5-84DSGe4mSF_Y6MTU5MDk5MDM4NjY0NDExMTMzMA%3D%3D; Path=/; Expires=Tue, 02 Jun 2020 05:46:26 GMT; HttpOnly
+|     Date: Mon, 01 Jun 2020 05:46:26 GMT
+|     <!DOCTYPE html>
+|     <html>
+|     <head data-suburl="">
+|     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+|     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+|     <meta name="author" content="Gogs" />
+|     <meta name="description" content="Gogs is a painless self-hosted Git service" />
+|     <meta name="keywords" content="go, git, self-hosted, gogs">
+|     <meta name="referrer" content="no-referrer" />
+|     <meta name="_csrf" content="waW8bGWUX58Wr5-84DSGe4mSF_Y6MTU5MDk5MDM4NjY0NDExMTMzMA==" />
+|     <meta name="_suburl" content="" />
+|_    <meta
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port3000-TCP:V=7.80%I=7%D=6/1%Time=5ED4954C%P=x86_64-pc-linux-gnu%r(Gen
+SF:ericLines,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20te
+SF:xt/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x2
+SF:0Request")%r(GetRequest,2063,"HTTP/1\.0\x20200\x20OK\r\nContent-Type:\x
+SF:20text/html;\x20charset=UTF-8\r\nSet-Cookie:\x20lang=en-US;\x20Path=/;\
+SF:x20Max-Age=2147483647\r\nSet-Cookie:\x20i_like_gogs=0450ae212e146f3f;\x
+SF:20Path=/;\x20HttpOnly\r\nSet-Cookie:\x20_csrf=FetWi2hh11PMhP2Hp2m1TPrzN
+SF:WA6MTU5MDk5MDM4MTQ4MTEzMTUzMA%3D%3D;\x20Path=/;\x20Expires=Tue,\x2002\x
+SF:20Jun\x202020\x2005:46:21\x20GMT;\x20HttpOnly\r\nDate:\x20Mon,\x2001\x2
+SF:0Jun\x202020\x2005:46:21\x20GMT\r\n\r\n<!DOCTYPE\x20html>\n<html>\n<hea
+SF:d\x20data-suburl=\"\">\n\t<meta\x20http-equiv=\"Content-Type\"\x20conte
+SF:nt=\"text/html;\x20charset=UTF-8\"\x20/>\n\t<meta\x20http-equiv=\"X-UA-
+SF:Compatible\"\x20content=\"IE=edge\"/>\n\t\n\t\t<meta\x20name=\"author\"
+SF:\x20content=\"Gogs\"\x20/>\n\t\t<meta\x20name=\"description\"\x20conten
+SF:t=\"Gogs\x20is\x20a\x20painless\x20self-hosted\x20Git\x20service\"\x20/
+SF:>\n\t\t<meta\x20name=\"keywords\"\x20content=\"go,\x20git,\x20self-host
+SF:ed,\x20gogs\">\n\t\n\t<meta\x20name=\"referrer\"\x20content=\"no-referr
+SF:er\"\x20/>\n\t<meta\x20name=\"_csrf\"\x20content=\"FetWi2hh11PMhP2Hp2m1
+SF:TPrzNWA6MTU5MDk5MDM4MTQ4MTEzMTUzMA==\"\x20/>\n\t<meta\x20name=\"_suburl
+SF:\"\x20content=\"\"\x20/>\n\t\n\t\n\t\n\t\t<meta\x20proper")%r(Help,67,"
+SF:HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20c
+SF:harset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(H
+SF:TTPOptions,189F,"HTTP/1\.0\x20404\x20Not\x20Found\r\nContent-Type:\x20t
+SF:ext/html;\x20charset=UTF-8\r\nSet-Cookie:\x20lang=en-US;\x20Path=/;\x20
+SF:Max-Age=2147483647\r\nSet-Cookie:\x20i_like_gogs=b9d6e451933a5977;\x20P
+SF:ath=/;\x20HttpOnly\r\nSet-Cookie:\x20_csrf=waW8bGWUX58Wr5-84DSGe4mSF_Y6
+SF:MTU5MDk5MDM4NjY0NDExMTMzMA%3D%3D;\x20Path=/;\x20Expires=Tue,\x2002\x20J
+SF:un\x202020\x2005:46:26\x20GMT;\x20HttpOnly\r\nDate:\x20Mon,\x2001\x20Ju
+SF:n\x202020\x2005:46:26\x20GMT\r\n\r\n<!DOCTYPE\x20html>\n<html>\n<head\x
+SF:20data-suburl=\"\">\n\t<meta\x20http-equiv=\"Content-Type\"\x20content=
+SF:\"text/html;\x20charset=UTF-8\"\x20/>\n\t<meta\x20http-equiv=\"X-UA-Com
+SF:patible\"\x20content=\"IE=edge\"/>\n\t\n\t\t<meta\x20name=\"author\"\x2
+SF:0content=\"Gogs\"\x20/>\n\t\t<meta\x20name=\"description\"\x20content=\
+SF:"Gogs\x20is\x20a\x20painless\x20self-hosted\x20Git\x20service\"\x20/>\n
+SF:\t\t<meta\x20name=\"keywords\"\x20content=\"go,\x20git,\x20self-hosted,
+SF:\x20gogs\">\n\t\n\t<meta\x20name=\"referrer\"\x20content=\"no-referrer\
+SF:"\x20/>\n\t<meta\x20name=\"_csrf\"\x20content=\"waW8bGWUX58Wr5-84DSGe4m
+SF:SF_Y6MTU5MDk5MDM4NjY0NDExMTMzMA==\"\x20/>\n\t<meta\x20name=\"_suburl\"\
+SF:x20content=\"\"\x20/>\n\t\n\t\n\t\n\t\t<meta");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Jun  1 01:44:01 2020 -- 1 IP address (1 host up) scanned in 99.00 seconds

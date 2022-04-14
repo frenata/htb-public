@@ -1,0 +1,9 @@
+# Nmap 7.80 scan initiated Tue May 19 22:19:59 2020 as: nmap -sUV -F -v -oA logs/nmap-udp backup.forwardslash.htb
+Nmap scan report for backup.forwardslash.htb (10.10.10.183)
+Host is up (0.011s latency).
+rDNS record for 10.10.10.183: forwardslash.htb
+All 100 scanned ports on backup.forwardslash.htb (10.10.10.183) are closed
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue May 19 22:21:42 2020 -- 1 IP address (1 host up) scanned in 103.39 seconds

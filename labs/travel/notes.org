@@ -1,0 +1,109 @@
+* Travel
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Sat May 23 02:34:19 2020 as: nmap -Pn -sC -sV -oA logs/nmap 10.10.10.189
+Nmap scan report for 10.10.10.189
+Host is up (0.020s latency).
+Not shown: 997 closed ports
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+# Nmap done at Sat May 23 02:34:34 2020 -- 1 IP address (1 host up) scanned in 14.47 seconds
+*** 22/tcp  open  ssh      OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+*** 80/tcp  open  http     nginx 1.17.6
+**** scan
+|_http-server-header: nginx/1.17.6
+|_http-title: Travel.HTB
+*** 443/tcp open  ssl/http nginx 1.17.6
+**** scan
+|_http-server-header: nginx/1.17.6
+|_http-title: Travel.HTB - SSL coming soon.
+| ssl-cert: Subject: commonName=www.travel.htb/organizationName=Travel.HTB/countryName=UK
+| Subject Alternative Name: DNS:www.travel.htb, DNS:blog.travel.htb, DNS:blog-dev.travel.htb
+| Not valid before: 2020-04-23T19:24:29
+|_Not valid after:  2030-04-21T19:24:29
+**** notes
+Add all the subdomains to ~/etc/hosts~
+** Foothold
+   
+*** https
+
+Every subdomain just shows the same message re: not working SSL.
+
+*** www.travel.htb / travel.htb   
+
+Not too much of interest -- 
+
+*** blog-dev.travel.htb
+
+403
+
+While fuzzing with ~dirsearch~, found a ~.git~ directory, was able to download the expected files, then use ~refs/heads/master~ to see what the expected object files were, download it, and use ~git show~ to find other object files. Eventually had all the repository objects and could reproduce it's current state, giving files: ~rss_template.php~ and ~template.php~
+
+*** blog.travel.htb
+    
+wordpress blog! v 5.4
+https://hackertarget.com/attacking-wordpress/
+https://wpvulndb.com/
+
+
+#+BEGIN_SRC html
+<style>.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style id="wp-custom-css">
+			/* I am really not sure how to include a custom CSS file
+ * in worpress. I am including it directly via Additional CSS for now.
+ * TODO: Fixme when copying from -dev to -prod. */
+
+@import url(http://blog-dev.travel.htb/wp-content/uploads/2020/04/custom-css-version#01.css);		</style>
+#+END_SRC
+
+Found location of template/rss_template/debug on the server, which should be useful for later exfiltration:
+~blog.travel.htb/wp-content/themes/twentytwenty/debug.php~
+
+There eventually turn out to be two big tricks here, injecting a value into ~memcached~ and then forcing the ~awesome_rss~ endpoint to deserialize that value and trigger RCE.
+
+*** injecting a value
+
+~template.php~ conveniently has a class for me to abuse directly: it creates an arbitrary file/contents in the ~logs~ dir, so I can put a file named ~cmd.php~ that just executes a query param into ~system~.    
+
+*** triggering deserialization
+
+This wasn't conceptually hard, but I just missed a few things and had a blind spot for a while. I setup a replica of the server setup: memcached and SimplePie. Then give SimplePie a URL and see what key it puts into memcached. I had this wrong for an embarassingly long time because I was computing the key locally with ~localhost:8000/customfeed.xml~ but sending ~10.10.16.100:8000/customfeed.xml~ to the server. As it turns out, SimplePie uses the domain name as part of the hash computation, so this just broke the attack!
+
+** Escalation
+
+*** www-data > lynik-admin
+    
+After getting *RCE* as ~www-data~, I wanted a slightly better shell, but since ~www-data~ doesn't have shell for login, the best I can do is a web-shell. ~White Werewolf~ is good enough and I modify the existing attack script to upload it from localhost and cleanup ~cmd.php~.
+
+Some very basic enumeration reveals something interesting in ~/opt/wordpress~, a sql backup file! Inside is a table of users and hashed passwords, john-the-ripper breaks the password for ~lynik-admin~ as *1stepcloser*.
+
+That credential works with ~ssh~, so I finally have a real foothold on the box.
+
+*** lynik-admin > trvl-admin
+
+Basically the thing to do here is abuse LDAP privileges: the LDAP ~BINDPW~ used to be recorded in plaintext, and was deleted but still shows up in ~.viminfo~, whoops!
+
+Resources to understand how to manipulate the LDAP directory:
+ * https://ldap3.readthedocs.io/en/latest/tutorial_intro.html#accessing-an-ldap-server
+ * https://ldap3.readthedocs.io/en/latest/tutorial_operations.html
+ * https://ldap3.readthedocs.io/en/latest/modify.html
+ * https://www.n00py.io/2020/02/exploiting-ldap-server-null-bind/
+ * https://www.digitalocean.com/community/tutorials/how-to-change-account-passwords-on-an-openldap-server
+   
+With the root password for LDAP in hand, the only trick is figuring out what the rootDN is for LDAP: I initially tried ~admin~ and ~root~ before moving off to other things, only to eventually discover that the current user has it directly (clued in by the fact that they had the bindpw in their personal config!).
+
+So the command: 
+
+~ldapsearch -H ldap://ldap.travel.htb -x -D "cn=lynik-admin,dc=travel,dc=htb" -W~ dumps all the directory details out for us to look at.
+
+After eventually figuring out the right way to connect, I tried to create a new user with home directory ~/root~, but was faced with two issues: the LDAP config wouldn't allow specification of the public SSH key and it wouldn't allow creation of new users!
+
+So... why not modify an existing user? I picked ~christopher~ for no particular reason.
+
+I tried giving him a password and trying to login in and kept failing... eventually I realized that while LDAP *says* he has a home directory he isn't actually present in ~/etc/shadow~. The only other user that has logon privileges is ~trvl-admin~, so I decided to spoof their credentials.
+
+A few commands got ~christopher~ modified in the directory to have the posix username and number of ~trvl-admin~. I tried copying the hash of ~lynik-admin~, but realized it was being rehashed, so just specified it in plaintext, that worked!
+
+Now ~christopher~ could essentially log in as ~trvl-admin~, so I opened a new ssh session.
+
+*** trvl-admin > root
+
+~sudo -l~ reveals ALL ALL ALL, so ~sudo su~ and we are *root*.

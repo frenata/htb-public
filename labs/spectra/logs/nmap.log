@@ -1,0 +1,11 @@
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-26 21:15 UTC
+Nmap scan report for ip-10-10-10-229.ec2.internal (10.10.10.229)
+Host is up (0.018s latency).
+Not shown: 65531 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+3306/tcp open  mysql
+8081/tcp open  blackice-icecap
+
+Nmap done: 1 IP address (1 host up) scanned in 5.99 seconds

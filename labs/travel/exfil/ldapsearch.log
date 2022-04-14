@@ -1,0 +1,279 @@
+# extended LDIF
+#
+# LDAPv3
+# base <dc=travel,dc=htb> (default) with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# travel.htb
+dn: dc=travel,dc=htb
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: Travel.HTB
+dc: travel
+
+# admin, travel.htb
+dn: cn=admin,dc=travel,dc=htb
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+
+# servers, travel.htb
+dn: ou=servers,dc=travel,dc=htb
+description: Servers
+objectClass: organizationalUnit
+ou: servers
+
+# lynik-admin, travel.htb
+dn: cn=lynik-admin,dc=travel,dc=htb
+description: LDAP administrator
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: lynik-admin
+userPassword:: e1NTSEF9MEpaelF3blZJNEZrcXRUa3pRWUxVY3ZkN1NwRjFRYkRjVFJta3c9PQ=
+ =
+
+# workstations, travel.htb
+dn: ou=workstations,dc=travel,dc=htb
+description: Workstations
+objectClass: organizationalUnit
+ou: workstations
+
+# linux, servers, travel.htb
+dn: ou=linux,ou=servers,dc=travel,dc=htb
+description: Linux Servers
+objectClass: organizationalUnit
+ou: linux
+
+# windows, servers, travel.htb
+dn: ou=windows,ou=servers,dc=travel,dc=htb
+description: Windows Servers
+objectClass: organizationalUnit
+ou: windows
+
+# users, linux, servers, travel.htb
+dn: ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+description: Linux Users
+objectClass: organizationalUnit
+ou: users
+
+# groups, linux, servers, travel.htb
+dn: ou=groups,ou=linux,ou=servers,dc=travel,dc=htb
+description: Linux Groups
+objectClass: organizationalUnit
+ou: groups
+
+# jane, users, linux, servers, travel.htb
+dn: uid=jane,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: jane
+cn: Jane Rodriguez
+sn: Rodriguez
+givenName: Jane
+loginShell: /bin/bash
+uidNumber: 5005
+gidNumber: 5000
+homeDirectory: /home/jane
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# brian, users, linux, servers, travel.htb
+dn: uid=brian,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: brian
+cn: Brian Bell
+sn: Bell
+givenName: Brian
+loginShell: /bin/bash
+uidNumber: 5002
+gidNumber: 5000
+homeDirectory: /home/brian
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# frank, users, linux, servers, travel.htb
+dn: uid=frank,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: frank
+cn: Frank Stewart
+sn: Stewart
+givenName: Frank
+loginShell: /bin/bash
+uidNumber: 5001
+gidNumber: 5000
+homeDirectory: /home/frank
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# jerry, users, linux, servers, travel.htb
+dn: uid=jerry,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: jerry
+uidNumber: 5006
+homeDirectory: /home/jerry
+givenName: Jerry
+gidNumber: 5000
+sn: Morgan
+cn: Jerry Morgan
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+loginShell: /bin/bash
+
+# lynik, users, linux, servers, travel.htb
+dn: uid=lynik,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: lynik
+uidNumber: 5000
+homeDirectory: /home/lynik
+givenName: Lynik
+gidNumber: 5000
+sn: Schmidt
+cn: Lynik Schmidt
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+loginShell: /bin/bash
+
+# edward, users, linux, servers, travel.htb
+dn: uid=edward,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: edward
+uidNumber: 5009
+homeDirectory: /home/edward
+givenName: Edward
+gidNumber: 5000
+sn: Roberts
+cn: Edward Roberts
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+loginShell: /bin/bash
+
+# eugene, users, linux, servers, travel.htb
+dn: uid=eugene,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: eugene
+cn: Eugene Scott
+sn: Scott
+givenName: Eugene
+loginShell: /bin/bash
+uidNumber: 5008
+gidNumber: 5000
+homeDirectory: /home/eugene
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# gloria, users, linux, servers, travel.htb
+dn: uid=gloria,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: gloria
+uidNumber: 5010
+homeDirectory: /home/gloria
+givenName: Gloria
+gidNumber: 5000
+sn: Wood
+cn: Gloria Wood
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+loginShell: /bin/bash
+
+# johnny, users, linux, servers, travel.htb
+dn: uid=johnny,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: johnny
+cn: Johnny Miller
+sn: Miller
+givenName: Johnny
+loginShell: /bin/bash
+uidNumber: 5004
+gidNumber: 5000
+homeDirectory: /home/johnny
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# louise, users, linux, servers, travel.htb
+dn: uid=louise,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: louise
+cn: Louise Griffin
+sn: Griffin
+givenName: Louise
+loginShell: /bin/bash
+uidNumber: 5007
+gidNumber: 5000
+homeDirectory: /home/louise
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# christopher, users, linux, servers, travel.htb
+dn: uid=christopher,ou=users,ou=linux,ou=servers,dc=travel,dc=htb
+uid: christopher
+cn: Christopher Ward
+sn: Ward
+givenName: Christopher
+loginShell: /bin/bash
+uidNumber: 5003
+gidNumber: 5000
+homeDirectory: /home/christopher
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+
+# domainusers, groups, linux, servers, travel.htb
+dn: cn=domainusers,ou=groups,ou=linux,ou=servers,dc=travel,dc=htb
+memberUid: frank
+memberUid: brian
+memberUid: christopher
+memberUid: johnny
+memberUid: julia
+memberUid: jerry
+memberUid: louise
+memberUid: eugene
+memberUid: edward
+memberUid: gloria
+memberUid: lynik
+gidNumber: 5000
+cn: domainusers
+objectClass: top
+objectClass: posixGroup
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 22
+# numEntries: 21

